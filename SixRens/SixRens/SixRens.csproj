@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -10,7 +10,6 @@
     <PackageId>SixRens.Core</PackageId>
     <Version>1.1.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/YiJingFramework/sixrens-core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
