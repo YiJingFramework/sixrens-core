@@ -1,11 +1,5 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.工具;
 using SixRens.实体;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using YiJingFramework.StemsAndBranches;
 using static SixRens.Api.实体.I年月日时;
 
@@ -20,17 +14,17 @@ namespace SixRens.扩展
                 public HeavenlyStem 旬首干 => new HeavenlyStem(1);
                 public 旬((HeavenlyStem 干, EarthlyBranch 支) 旬内一日)
                 {
-                    this.旬首支 = new EarthlyBranch(旬内一日.支.Index - 旬内一日.干.Index + 1);
+                    旬首支 = new EarthlyBranch(旬内一日.支.Index - 旬内一日.干.Index + 1);
                 }
                 public EarthlyBranch 旬首支 { get; }
-                public EarthlyBranch 空亡一 => new EarthlyBranch(this.旬首支.Index - 2);
-                public EarthlyBranch 空亡二 => new EarthlyBranch(this.旬首支.Index - 1);
+                public EarthlyBranch 空亡一 => new EarthlyBranch(旬首支.Index - 2);
+                public EarthlyBranch 空亡二 => new EarthlyBranch(旬首支.Index - 1);
                 public IEnumerable<(HeavenlyStem 干, EarthlyBranch 支)> 每日干支
                 {
                     get
                     {
-                        HeavenlyStem 干 = this.旬首干;
-                        EarthlyBranch 支 = this.旬首支;
+                        HeavenlyStem 干 = 旬首干;
+                        EarthlyBranch 支 = 旬首支;
                         for (; 干.Index <= 10;)
                         {
                             yield return (干, 支);
@@ -42,13 +36,13 @@ namespace SixRens.扩展
 
                 public HeavenlyStem? 获取对应天干(EarthlyBranch 地支)
                 {
-                    if (地支 == this.空亡一 || 地支 == this.空亡二)
+                    if (地支 == 空亡一 || 地支 == 空亡二)
                         return null;
-                    return new HeavenlyStem((地支.Index - this.旬首支.Index + 13) % 12);
+                    return new HeavenlyStem((地支.Index - 旬首支.Index + 13) % 12);
                 }
                 public EarthlyBranch 获取对应地支(HeavenlyStem 天干)
                 {
-                    return new EarthlyBranch(天干.Index - 1 + this.旬首支.Index);
+                    return new EarthlyBranch(天干.Index - 1 + 旬首支.Index);
                 }
             }
 
@@ -73,7 +67,7 @@ namespace SixRens.扩展
                 this.日支 = 日支;
                 this.时支 = 时支;
                 this.昼占 = 昼占;
-                this.旬所在 = new 旬((日干, 日支));
+                旬所在 = new 旬((日干, 日支));
                 this.月将 = 月将;
             }
 

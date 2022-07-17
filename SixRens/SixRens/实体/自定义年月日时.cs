@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using YiJingFramework.StemsAndBranches;
+﻿using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.实体
 {

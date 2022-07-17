@@ -28,7 +28,7 @@ namespace SixRens.实体
 
         public bool 检验昼夜()
         {
-            return this.昼占 == (this.时支.Index is >= 4 and < 10);
+            return 昼占 == (时支.Index is >= 4 and < 10);
         }
         public bool 检验年日阴阳()
         {
