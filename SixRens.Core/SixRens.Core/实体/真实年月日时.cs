@@ -1,7 +1,7 @@
 ﻿using com.nlf.calendar;
 using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体
+namespace SixRens.Core.实体
 {
     public sealed class 真实年月日时 : I年月日时信息
     {

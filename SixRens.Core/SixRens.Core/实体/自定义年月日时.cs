@@ -1,6 +1,6 @@
 ﻿using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体
+namespace SixRens.Core.实体
 {
     public sealed record 自定义年月日时(
         HeavenlyStem 年干,

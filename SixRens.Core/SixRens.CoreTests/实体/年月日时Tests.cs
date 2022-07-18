@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体.Tests
+namespace SixRens.Core.实体.Tests
 {
     [TestClass()]
     public class 年月日时Tests

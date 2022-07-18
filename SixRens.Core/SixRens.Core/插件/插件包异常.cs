@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SixRens.插件
+﻿namespace SixRens.Core.插件
 {
     [Serializable]
     public class 插件包读取异常 : Exception

@@ -2,7 +2,7 @@
 using YiJingFramework.Core;
 using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体
+namespace SixRens.Core.实体
 {
     internal sealed record 年命信息(
         YinYang 性别,

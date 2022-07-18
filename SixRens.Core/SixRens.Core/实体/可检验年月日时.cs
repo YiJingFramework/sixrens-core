@@ -1,7 +1,7 @@
 ﻿using SixRens.Api.工具;
 using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体
+namespace SixRens.Core.实体
 {
     public sealed record 可检验年月日时(
         HeavenlyStem 年干,

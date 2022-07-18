@@ -1,17 +1,12 @@
 ﻿using SixRens.Api;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 using System.Security;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace SixRens.插件
+namespace SixRens.Core.插件
 {
     public sealed class 插件包
     {
@@ -219,11 +214,11 @@ namespace SixRens.插件
                 Debug.Assert(信息.主程序集 is not null);
                 Debug.Assert(信息.插件类 is not null);
 
-                this.名称 = 信息.名称;
-                this.版本号 = 信息.版本号;
-                this.网址 = 信息.网址;
+                名称 = 信息.名称;
+                版本号 = 信息.版本号;
+                网址 = 信息.网址;
 
-                (this.插件包上下文, 主程序集) = 加载全部程序集(插件包, 信息.主程序集);
+                (插件包上下文, 主程序集) = 加载全部程序集(插件包, 信息.主程序集);
             }
             try
             {
@@ -316,7 +311,7 @@ namespace SixRens.插件
             }
             catch
             {
-                this.插件包上下文.Unload();
+                插件包上下文.Unload();
                 throw;
             }
         }

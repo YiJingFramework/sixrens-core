@@ -1,11 +1,11 @@
 ﻿using SixRens.Api;
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
-using SixRens.实体;
-using SixRens.扩展;
+using SixRens.Core.实体;
+using SixRens.Core.扩展;
 using YiJingFramework.StemsAndBranches;
 
-namespace SixRens
+namespace SixRens.Core
 {
     public sealed class 壬式
     {
@@ -49,7 +49,7 @@ namespace SixRens
                 地盘 = 地盘插件.获取地盘(
                    this.年月日时, 基础盘);
             }
-            catch(起课失败异常 异常)
+            catch (起课失败异常 异常)
             {
                 throw new 起课失败异常($"获取地盘失败：{异常.Message}", 异常);
             }
@@ -115,7 +115,7 @@ namespace SixRens
             IEnumerable<I年命> 对象年命;
             try
             {
-                对象年命 = 
+                对象年命 =
                     from 本命 in 对象本命
                     let 年命 = 年命插件.获取年命(
                         this.年月日时, 基础盘, 地盘, 天盘, 四课, 三传, 天将盘,
@@ -199,19 +199,19 @@ namespace SixRens
 
         public 天将 取所乘将(EarthlyBranch 上者)
         {
-            return this.天将盘.取乘将(上者);
+            return 天将盘.取乘将(上者);
         }
         public 天将 取临我将(EarthlyBranch 下者)
         {
-            return this.天将盘.取乘将(this.取所乘神(下者));
+            return 天将盘.取乘将(取所乘神(下者));
         }
         public EarthlyBranch 取所乘神(EarthlyBranch 下者)
         {
-            return this.天盘.获取同位支(this.地盘, 下者);
+            return 天盘.获取同位支(地盘, 下者);
         }
         public EarthlyBranch 取所临神(EarthlyBranch 上者)
         {
-            return this.地盘.获取同位支(this.天盘, 上者);
+            return 地盘.获取同位支(天盘, 上者);
         }
     }
 }

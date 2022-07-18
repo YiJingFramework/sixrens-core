@@ -1,9 +1,9 @@
 ﻿using SixRens.Api.实体;
-using SixRens.实体;
+using SixRens.Core.实体;
 using YiJingFramework.StemsAndBranches;
 using static SixRens.Api.实体.I年月日时;
 
-namespace SixRens.扩展
+namespace SixRens.Core.扩展
 {
     public static class 年月日时扩展
     {

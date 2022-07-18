@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SixRens\SixRens.csproj" />
+    <ProjectReference Include="..\SixRens.Core\SixRens.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿using YiJingFramework.StemsAndBranches;
 
-namespace SixRens.实体
+namespace SixRens.Core.实体
 {
     public interface I年月日时信息
     {
