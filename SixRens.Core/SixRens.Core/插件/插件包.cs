@@ -1,4 +1,5 @@
 ﻿using SixRens.Api;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Reflection;
@@ -299,15 +300,15 @@ namespace SixRens.Core.插件
                             $"此插件不属于任何具体的插件类型：{插件.插件名}（{插件.插件识别码}）");
                 }
 
-                this.地盘插件 = Array.AsReadOnly(地盘插件.ToArray());
-                this.天盘插件 = Array.AsReadOnly(天盘插件.ToArray());
-                this.四课插件 = Array.AsReadOnly(四课插件.ToArray());
-                this.三传插件 = Array.AsReadOnly(三传插件.ToArray());
-                this.天将插件 = Array.AsReadOnly(天将插件.ToArray());
-                this.年命插件 = Array.AsReadOnly(年命插件.ToArray());
-                this.神煞插件 = Array.AsReadOnly(神煞插件.ToArray());
-                this.课体插件 = Array.AsReadOnly(课体插件.ToArray());
-                this.参考插件 = Array.AsReadOnly(参考插件.ToArray());
+                this.地盘插件 = new ReadOnlyCollection<I地盘插件>(地盘插件);
+                this.天盘插件 = new ReadOnlyCollection<I天盘插件>(天盘插件);
+                this.四课插件 = new ReadOnlyCollection<I四课插件>(四课插件);
+                this.三传插件 = new ReadOnlyCollection<I三传插件>(三传插件);
+                this.天将插件 = new ReadOnlyCollection<I天将插件>(天将插件);
+                this.年命插件 = new ReadOnlyCollection<I年命插件>(年命插件);
+                this.神煞插件 = new ReadOnlyCollection<I神煞插件>(神煞插件);
+                this.课体插件 = new ReadOnlyCollection<I课体插件>(课体插件);
+                this.参考插件 = new ReadOnlyCollection<I参考插件>(参考插件);
             }
             catch
             {

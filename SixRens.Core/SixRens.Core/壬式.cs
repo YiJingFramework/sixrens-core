@@ -3,6 +3,7 @@ using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
 using SixRens.Core.实体;
 using SixRens.Core.扩展;
+using System.Collections.ObjectModel;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core
@@ -153,9 +154,11 @@ namespace SixRens.Core
             var 神煞表 = new List<神煞>(神煞字典.Count);
             foreach (var (神煞名, 所在神) in 神煞字典)
             {
-                神煞表.Add(new 神煞(神煞名, Array.AsReadOnly(所在神.ToArray())));
+                var 在神 = 所在神.ToArray();
+                if (在神.Length > 0)
+                    神煞表.Add(new 神煞(神煞名, Array.AsReadOnly(在神)));
             }
-            神煞 = Array.AsReadOnly(神煞表.ToArray());
+            神煞 = new ReadOnlyCollection<神煞>(神煞表);
 
             HashSet<I课体> 课体 = new();
             foreach (var 插件 in 课体插件)
