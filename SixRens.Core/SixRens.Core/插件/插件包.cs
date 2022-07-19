@@ -100,8 +100,12 @@ namespace SixRens.Core.插件
                 {
                     try
                     {
-                        using var 项目流 = 项目.Open();
-                        var 程序集 = 上下文.LoadFromStream(项目流);
+                        using var 解压流 = new MemoryStream();
+
+                        using (var 项目流 = 项目.Open())
+                            项目流.CopyTo(解压流);
+
+                        var 程序集 = 上下文.LoadFromStream(解压流);
                         if (主程序集 is null && 项目.FullName == 主程序集路径)
                             主程序集 = 程序集;
                     }
