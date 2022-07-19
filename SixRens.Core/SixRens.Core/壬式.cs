@@ -87,8 +87,9 @@ namespace SixRens.Core
 
             try
             {
-                四课 = 所用四课插件.获取四课(
+                var 四课 = 所用四课插件.获取四课(
                     this.年月日时, 基础盘, 地盘, 天盘);
+                this.四课 = new 四课(四课.日, 四课.日阳, 四课.日阴, 四课.辰, 四课.辰阳, 四课.辰阴);
             }
             catch (起课失败异常 异常)
             {
@@ -97,8 +98,9 @@ namespace SixRens.Core
 
             try
             {
-                三传 = 所用三传插件.获取三传(
+                var 三传 = 所用三传插件.获取三传(
                     this.年月日时, 基础盘, 地盘, 天盘, 四课);
+                this.三传 = new 三传(三传.初传, 三传.中传, 三传.末传);
             }
             catch (起课失败异常 异常)
             {
@@ -107,8 +109,9 @@ namespace SixRens.Core
 
             try
             {
-                天将盘 = 所用天将插件.获取天将盘(
+                var 天将盘 = 所用天将插件.获取天将盘(
                     this.年月日时, 基础盘, 地盘, 天盘, 四课, 三传);
+                this.天将盘 = new 天将盘(天将盘);
             }
             catch (起课失败异常 异常)
             {
@@ -123,16 +126,16 @@ namespace SixRens.Core
                     年命 = 所用年命插件.获取年命(
                         this.年月日时, 基础盘, 地盘, 天盘, 四课, 三传, 天将盘,
                         课主本命.性别, 课主本命.本命);
+                    课主年命 = new 年命信息(年命.性别, 年命.本命, 年命.行年);
                 }
                 catch (起课失败异常 异常)
                 {
                     throw new 起课失败异常($"获取课主年命失败：{异常.Message}", 异常);
                 }
-
-                课主年命 = new 年命信息(年命.性别, 年命.本命, 年命.行年);
             }
             // else
             //    this.课主本命 = null;
+
             IEnumerable<I年命> 对象年命;
             try
             {
@@ -182,19 +185,18 @@ namespace SixRens.Core
             HashSet<I课体> 课体 = new();
             foreach (var 插件 in 所用课体插件)
             {
-                IEnumerable<I课体> 插件课体;
                 try
                 {
-                    插件课体 = 插件.识别课体(
+                    var 插件课体 = 插件.识别课体(
                         this.年月日时, 基础盘, 地盘, 天盘, 四课, 三传, 天将盘,
                         课主年命, this.对象年命, 神煞);
+                    foreach (var 单课体 in 插件课体)
+                        _ = 课体.Add(new 课体(单课体.课体名));
                 }
                 catch (起课失败异常 异常)
                 {
                     throw new 起课失败异常($"获取课体失败（插件：{插件.插件识别码}）：{异常.Message}", 异常);
                 }
-                foreach (var 单课体 in 插件课体)
-                    _ = 课体.Add(new 课体(单课体.课体名));
             }
             this.课体 = Array.AsReadOnly(课体.ToArray());
 

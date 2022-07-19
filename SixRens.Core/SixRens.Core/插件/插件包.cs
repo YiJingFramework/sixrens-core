@@ -98,21 +98,12 @@ namespace SixRens.Core.插件
                 foreach (var 项目 in 插件包.Entries
                     .Where(路径 => Path.GetExtension(路径.Name).ToLowerInvariant() is 程序集后缀))
                 {
-                    const string 六壬接口程序集名称 = "SixRens.Api";
-                    const string 六壬接口程序集名称含后缀 = $"{六壬接口程序集名称}.dll";
-                    if (项目.Name is 六壬接口程序集名称含后缀)
-                        continue;
                     try
                     {
                         using var 项目流 = 项目.Open();
                         var 程序集 = 上下文.LoadFromStream(项目流);
                         if (主程序集 is null && 项目.FullName == 主程序集路径)
                             主程序集 = 程序集;
-                        if (程序集.GetName().Name is 六壬接口程序集名称)
-                        {
-                            throw new 插件包读取异常(
-                                $"插件包内容不正确，插件包不可包含被重命名过的{六壬接口程序集名称}");
-                        }
                     }
                     catch (IOException e)
                     {
@@ -130,7 +121,7 @@ namespace SixRens.Core.插件
             }
             catch
             {
-                上下文?.Unload();
+                上下文.Unload();
                 throw;
             }
             return (上下文, 主程序集);
@@ -158,6 +149,13 @@ namespace SixRens.Core.插件
             catch (BadImageFormatException e)
             {
                 throw new 插件包读取异常($"指定插件类加载失败：{类名}", e);
+            }
+            catch (TypeLoadException e)
+            {
+                throw new 插件包读取异常(
+                    $"指定插件类加载失败" +
+                    $"（这可能是由于 SixRens.Api 等基础程序集被重复引用导致的，" +
+                    $"如果你是插件作者，请注意不要把此类程序集放入插件包中）：{类名}", e);
             }
             if (插件类 is null)
                 throw new 插件包读取异常($"找不到指定插件类：{类名}");
@@ -191,7 +189,10 @@ namespace SixRens.Core.插件
             if (实例 is I插件 结果)
                 return 结果;
             else
-                throw new 插件包读取异常($"指定插件类没有实现插件接口：{类名}");
+                throw new 插件包读取异常(
+                    $"指定插件类没有实现插件接口" +
+                    $"（这可能是由于 SixRens.Api 等基础程序集被重复引用导致的，" +
+                    $"如果你是插件作者，请注意不要把此类程序集放入插件包中）：{类名}");
         }
 
         public 插件包(Stream 插件包流)
