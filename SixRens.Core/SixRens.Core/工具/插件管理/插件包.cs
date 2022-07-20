@@ -7,7 +7,7 @@ using System.Runtime.Loader;
 using System.Security;
 using System.Text.Json;
 
-namespace SixRens.Core.插件
+namespace SixRens.Core.工具.插件管理
 {
     public sealed class 插件包
     {

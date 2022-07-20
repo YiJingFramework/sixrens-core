@@ -2,7 +2,7 @@
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
 using SixRens.Core.实体;
-using SixRens.Core.扩展;
+using SixRens.Core.工具.年月日时;
 using System.Collections.ObjectModel;
 using YiJingFramework.StemsAndBranches;
 

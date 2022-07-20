@@ -1,4 +1,4 @@
-﻿namespace SixRens.Core.插件
+﻿namespace SixRens.Core.工具.插件管理
 {
     [Serializable]
     public class 插件包读取异常 : Exception

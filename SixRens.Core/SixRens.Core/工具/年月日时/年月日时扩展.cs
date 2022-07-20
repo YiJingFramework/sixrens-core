@@ -3,13 +3,13 @@ using SixRens.Core.实体;
 using YiJingFramework.StemsAndBranches;
 using static SixRens.Api.实体.I年月日时;
 
-namespace SixRens.Core.扩展
+namespace SixRens.Core.工具.年月日时
 {
     public static class 年月日时扩展
     {
         private sealed class 自由年月日时 : I年月日时, I年月日时信息
         {
-            private sealed class 旬 : I年月日时.I旬
+            private sealed class 旬 : I旬
             {
                 public HeavenlyStem 旬首干 => new HeavenlyStem(1);
                 public 旬((HeavenlyStem 干, EarthlyBranch 支) 旬内一日)
