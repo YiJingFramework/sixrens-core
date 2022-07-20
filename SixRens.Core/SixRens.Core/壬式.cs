@@ -35,9 +35,9 @@ namespace SixRens.Core
         public I三传插件 所用三传插件 { get; }
         public I天将插件 所用天将插件 { get; }
         public I年命插件 所用年命插件 { get; }
-        public IReadOnlyCollection<I神煞插件> 所用神煞插件 { get; }
-        public IReadOnlyCollection<I课体插件> 所用课体插件 { get; }
-        public IReadOnlyCollection<I参考插件> 所用参考插件 { get; }
+        public IReadOnlyList<I神煞插件> 所用神煞插件 { get; }
+        public IReadOnlyList<I课体插件> 所用课体插件 { get; }
+        public IReadOnlyList<I参考插件> 所用参考插件 { get; }
 
         public 壬式(I年月日时信息 年月日时,
             本命信息? 课主本命,

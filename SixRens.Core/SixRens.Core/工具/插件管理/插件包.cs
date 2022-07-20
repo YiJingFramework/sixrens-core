@@ -24,15 +24,15 @@ namespace SixRens.Core.工具.插件管理
         public string 版本号 { get; }
         public string? 网址 { get; }
 
-        public IReadOnlyCollection<I地盘插件> 地盘插件 { get; }
-        public IReadOnlyCollection<I天盘插件> 天盘插件 { get; }
-        public IReadOnlyCollection<I四课插件> 四课插件 { get; }
-        public IReadOnlyCollection<I三传插件> 三传插件 { get; }
-        public IReadOnlyCollection<I天将插件> 天将插件 { get; }
-        public IReadOnlyCollection<I年命插件> 年命插件 { get; }
-        public IReadOnlyCollection<I神煞插件> 神煞插件 { get; }
-        public IReadOnlyCollection<I课体插件> 课体插件 { get; }
-        public IReadOnlyCollection<I参考插件> 参考插件 { get; }
+        public IReadOnlyList<I地盘插件> 地盘插件 { get; }
+        public IReadOnlyList<I天盘插件> 天盘插件 { get; }
+        public IReadOnlyList<I四课插件> 四课插件 { get; }
+        public IReadOnlyList<I三传插件> 三传插件 { get; }
+        public IReadOnlyList<I天将插件> 天将插件 { get; }
+        public IReadOnlyList<I年命插件> 年命插件 { get; }
+        public IReadOnlyList<I神煞插件> 神煞插件 { get; }
+        public IReadOnlyList<I课体插件> 课体插件 { get; }
+        public IReadOnlyList<I参考插件> 参考插件 { get; }
         public AssemblyLoadContext 插件包上下文 { get; }
 
         private static 可序列化插件包信息 获取并解析信息文件(ZipArchive 插件包)
