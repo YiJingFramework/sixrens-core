@@ -8,7 +8,7 @@ using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.工具.名称转换
 {
-    public sealed class 名称转换扩展
+    public static class 名称转换扩展
     {
         public static 名称表<天将> 天将简称表 { get; } = new()
         {
@@ -26,7 +26,7 @@ namespace SixRens.Core.工具.名称转换
             { 天将.天后, "后" }
         };
 
-        public static string 简称(天将 天将)
+        public static string 简称(this 天将 天将)
         {
             if (天将简称表.TryGetValue(天将, out var 结果))
                 return 结果;
@@ -49,14 +49,14 @@ namespace SixRens.Core.工具.名称转换
             { new EarthlyBranch(12), "登明" }
         };
 
-        public static string 天神名(EarthlyBranch 天神)
+        public static string 天神名(this EarthlyBranch 天神)
         {
             if (天神名称表.TryGetValue(天神, out var 结果))
                 return 结果;
             return 天神.ToString("C");
         }
 
-        public static string 地支名(EarthlyBranch 地支)
+        public static string 地支名(this EarthlyBranch 地支)
         {
             return 地支.ToString("C");
         }
