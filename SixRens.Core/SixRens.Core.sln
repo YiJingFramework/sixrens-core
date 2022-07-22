@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixRens.Core", "SixRens.Core\SixRens.Core.csproj", "{BAFFA93C-498E-427E-8A44-EB28FC3BE55E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixRens.Core", "SixRens.Core\SixRens.Core.csproj", "{BAFFA93C-498E-427E-8A44-EB28FC3BE55E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SixRens.CoreTests", "SixRens.CoreTests\SixRens.CoreTests.csproj", "{C840DC01-2B12-46BC-B17B-F94EC8176208}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SixRens.CoreTests", "SixRens.CoreTests\SixRens.CoreTests.csproj", "{C840DC01-2B12-46BC-B17B-F94EC8176208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "测试用交互", "测试用交互\测试用交互.csproj", "{09321097-E4F7-47A9-A811-3C7719BE141E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "测试用插件包", "测试用插件包\测试用插件包.csproj", "{4E3A1208-3440-4775-8384-A7AD0C621E34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{C840DC01-2B12-46BC-B17B-F94EC8176208}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C840DC01-2B12-46BC-B17B-F94EC8176208}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C840DC01-2B12-46BC-B17B-F94EC8176208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09321097-E4F7-47A9-A811-3C7719BE141E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09321097-E4F7-47A9-A811-3C7719BE141E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09321097-E4F7-47A9-A811-3C7719BE141E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09321097-E4F7-47A9-A811-3C7719BE141E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3A1208-3440-4775-8384-A7AD0C621E34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3A1208-3440-4775-8384-A7AD0C621E34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3A1208-3440-4775-8384-A7AD0C621E34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3A1208-3440-4775-8384-A7AD0C621E34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
