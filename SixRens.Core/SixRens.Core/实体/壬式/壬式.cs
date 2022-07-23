@@ -52,21 +52,21 @@ namespace SixRens.Core.实体.壬式
             IEnumerable<I课体插件> 课体插件,
             IEnumerable<I参考插件> 参考插件)
         {
-            所用地盘插件 = 地盘插件;
-            所用天盘插件 = 天盘插件;
-            所用四课插件 = 四课插件;
-            所用三传插件 = 三传插件;
-            所用天将插件 = 天将插件;
-            所用年命插件 = 年命插件;
-            所用神煞插件 = Array.AsReadOnly(神煞插件.ToArray());
-            所用课体插件 = Array.AsReadOnly(课体插件.ToArray());
-            所用参考插件 = Array.AsReadOnly(参考插件.ToArray());
+            this.所用地盘插件 = 地盘插件;
+            this.所用天盘插件 = 天盘插件;
+            this.所用四课插件 = 四课插件;
+            this.所用三传插件 = 三传插件;
+            this.所用天将插件 = 天将插件;
+            this.所用年命插件 = 年命插件;
+            this.所用神煞插件 = Array.AsReadOnly(神煞插件.ToArray());
+            this.所用课体插件 = Array.AsReadOnly(课体插件.ToArray());
+            this.所用参考插件 = Array.AsReadOnly(参考插件.ToArray());
 
             this.年月日时 = 年月日时.生成年月日时();
 
             try
             {
-                var 地盘 = 所用地盘插件.获取地盘(
+                var 地盘 = this.所用地盘插件.获取地盘(
                    this.年月日时);
                 this.地盘 = new 地盘(地盘);
             }
@@ -77,8 +77,8 @@ namespace SixRens.Core.实体.壬式
 
             try
             {
-                var 天盘 = 所用天盘插件.获取天盘(
-                    this.年月日时, 地盘);
+                var 天盘 = this.所用天盘插件.获取天盘(
+                    this.年月日时, this.地盘);
                 this.天盘 = new 天盘(天盘);
             }
             catch (起课失败异常 异常)
@@ -86,18 +86,18 @@ namespace SixRens.Core.实体.壬式
                 throw new 起课失败异常($"获取天盘失败：{异常.Message}", 异常);
             }
 
-            从天神查地支表 = new Dictionary<EarthlyBranch, EarthlyBranch>(12);
+            this.从天神查地支表 = new Dictionary<EarthlyBranch, EarthlyBranch>(12);
             for (int i = 1; i <= 12; i++)
             {
                 var 地支 = new EarthlyBranch(i);
-                var 天神 = 天盘.取天神(地支);
-                从天神查地支表.Add(天神, 地支);
+                var 天神 = this.天盘.取天神(地支);
+                this.从天神查地支表.Add(天神, 地支);
             }
 
             try
             {
-                var 四课 = 所用四课插件.获取四课(
-                    this.年月日时, 地盘, 天盘);
+                var 四课 = this.所用四课插件.获取四课(
+                    this.年月日时, this.地盘, this.天盘);
                 this.四课 = new 四课(四课.日, 四课.日阳, 四课.日阴, 四课.辰, 四课.辰阳, 四课.辰阴);
             }
             catch (起课失败异常 异常)
@@ -107,8 +107,8 @@ namespace SixRens.Core.实体.壬式
 
             try
             {
-                var 三传 = 所用三传插件.获取三传(
-                    this.年月日时, 地盘, 天盘, 四课);
+                var 三传 = this.所用三传插件.获取三传(
+                    this.年月日时, this.地盘, this.天盘, this.四课);
                 this.三传 = new 三传(三传.初传, 三传.中传, 三传.末传);
             }
             catch (起课失败异常 异常)
@@ -118,8 +118,8 @@ namespace SixRens.Core.实体.壬式
 
             try
             {
-                var 天将盘 = 所用天将插件.获取天将盘(
-                    this.年月日时, 地盘, 天盘, 四课, 三传);
+                var 天将盘 = this.所用天将插件.获取天将盘(
+                    this.年月日时, this.地盘, this.天盘, this.四课, this.三传);
                 this.天将盘 = new 天将盘(天将盘);
             }
             catch (起课失败异常 异常)
@@ -132,10 +132,10 @@ namespace SixRens.Core.实体.壬式
                 I年命 年命;
                 try
                 {
-                    年命 = 所用年命插件.获取年命(
-                        this.年月日时, 地盘, 天盘, 四课, 三传, 天将盘,
+                    年命 = this.所用年命插件.获取年命(
+                        this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
                         课主本命.性别, 课主本命.本命);
-                    课主年命 = new 年命信息(年命.性别, 年命.本命, 年命.行年);
+                    this.课主年命 = new 年命信息(年命.性别, 年命.本命, 年命.行年);
                 }
                 catch (起课失败异常 异常)
                 {
@@ -150,8 +150,8 @@ namespace SixRens.Core.实体.壬式
             {
                 对象年命 =
                     from 本命 in 对象本命
-                    let 年命 = 所用年命插件.获取年命(
-                        this.年月日时, 地盘, 天盘, 四课, 三传, 天将盘,
+                    let 年命 = this.所用年命插件.获取年命(
+                        this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
                         本命.性别, 本命.本命)
                     select new 年命信息(年命.性别, 年命.本命, 年命.行年);
             }
@@ -162,7 +162,7 @@ namespace SixRens.Core.实体.壬式
             this.对象年命 = Array.AsReadOnly(对象年命.ToArray());
 
             Dictionary<string, List<EarthlyBranch>> 神煞字典 = new();
-            foreach (var 插件 in 所用神煞插件)
+            foreach (var 插件 in this.所用神煞插件)
             {
                 try
                 {
@@ -172,8 +172,8 @@ namespace SixRens.Core.实体.壬式
                             神煞字典.Add(神煞.神煞名, new(1));
 
                         var 神煞内容 = 插件.获取神煞(
-                                this.年月日时, 地盘, 天盘, 四课, 三传, 天将盘,
-                                课主年命, this.对象年命, 神煞);
+                                this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
+                                this.课主年命, this.对象年命, 神煞);
                         神煞字典[神煞.神煞名].AddRange(神煞内容.所在神);
                     }
                 }
@@ -189,16 +189,16 @@ namespace SixRens.Core.实体.壬式
                 let 所在神 = 神煞名所在神.Value
                 where 所在神.Count > 0
                 select new 神煞(神煞名, Array.AsReadOnly(所在神.ToArray()));
-            神煞 = Array.AsReadOnly(神煞表.ToArray());
+            this.神煞 = Array.AsReadOnly(神煞表.ToArray());
 
             HashSet<I课体> 课体 = new();
-            foreach (var 插件 in 所用课体插件)
+            foreach (var 插件 in this.所用课体插件)
             {
                 try
                 {
                     var 插件课体 = 插件.识别课体(
-                        this.年月日时, 地盘, 天盘, 四课, 三传, 天将盘,
-                        课主年命, this.对象年命, 神煞);
+                        this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
+                        this.课主年命, this.对象年命, this.神煞);
                     foreach (var 单课体 in 插件课体)
                         _ = 课体.Add(new 课体(单课体.课体名));
                 }
@@ -211,7 +211,7 @@ namespace SixRens.Core.实体.壬式
 
 
             List<I占断参考> 占断参考 = new();
-            foreach (var 插件 in 所用参考插件)
+            foreach (var 插件 in this.所用参考插件)
             {
                 IEnumerable<占断参考> 插件参考;
                 try
@@ -219,8 +219,8 @@ namespace SixRens.Core.实体.壬式
                     插件参考 =
                         from 参考题目 in 插件.支持的占断参考
                         let 参考内容 = 插件.生成占断参考(
-                            this.年月日时, 地盘, 天盘, 四课, 三传, 天将盘,
-                            课主年命, this.对象年命, 神煞, this.课体, 参考题目)
+                            this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
+                            this.课主年命, this.对象年命, this.神煞, this.课体, 参考题目)
                         where 参考内容.内容 is not null
                         select new 占断参考(参考题目.题目, 参考内容.内容);
                 }
@@ -235,19 +235,19 @@ namespace SixRens.Core.实体.壬式
 
         public 天将 取所乘将(EarthlyBranch 天神)
         {
-            return 天将盘.取乘将(天神);
+            return this.天将盘.取乘将(天神);
         }
         public 天将 取临我将(EarthlyBranch 地盘支)
         {
-            return 天将盘.取乘将(取所乘神(地盘支));
+            return this.天将盘.取乘将(this.取所乘神(地盘支));
         }
         public EarthlyBranch 取所乘神(EarthlyBranch 地盘支)
         {
-            return 天盘.取天神(地盘支);
+            return this.天盘.取天神(地盘支);
         }
         public EarthlyBranch 取所临神(EarthlyBranch 天神)
         {
-            return 从天神查地支表[天神];
+            return this.从天神查地支表[天神];
         }
     }
 }

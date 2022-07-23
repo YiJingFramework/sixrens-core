@@ -24,21 +24,20 @@ namespace SixRens.Core.实体.年月日时
             var 八字 = 日期.getEightChar();
             八字.setSect(1);
 
-            年干 = 天干表[八字.getYearGan()];
-            月干 = 天干表[八字.getMonthGan()];
-            日干 = 天干表[八字.getDayGan()];
-            时干 = 天干表[八字.getTimeGan()];
+            this.年干 = 天干表[八字.getYearGan()];
+            this.月干 = 天干表[八字.getMonthGan()];
+            this.日干 = 天干表[八字.getDayGan()];
+            this.时干 = 天干表[八字.getTimeGan()];
 
-            年支 = 地支表[八字.getYearZhi()];
-            月支 = 地支表[八字.getMonthZhi()];
-            日支 = 地支表[八字.getDayZhi()];
-            时支 = 地支表[八字.getTimeZhi()];
+            this.年支 = 地支表[八字.getYearZhi()];
+            this.月支 = 地支表[八字.getMonthZhi()];
+            this.日支 = 地支表[八字.getDayZhi()];
+            this.时支 = 地支表[八字.getTimeZhi()];
 
-            昼占 = 时支.Index is >= 4 and < 10;
+            this.昼占 = this.时支.Index is >= 4 and < 10;
 
-            月将 = new EarthlyBranch(
-                日期.getPrevQi().getName() switch
-                {
+            this.月将 = new EarthlyBranch(
+                日期.getPrevQi().getName() switch {
                     "雨水" => 12,
                     "春分" => 11,
                     "谷雨" => 10,
