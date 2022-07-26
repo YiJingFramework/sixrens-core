@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="lunar-csharp" Version="1.2.19" />
-    <PackageReference Include="SixRens.Api" Version="1.12.4" />
+    <PackageReference Include="SixRens.Api" Version="1.13.0" />
   </ItemGroup>
 
 </Project>

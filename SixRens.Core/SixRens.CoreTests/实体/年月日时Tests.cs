@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SixRens.Core.实体.年月日时;
+using SixRens.Core.年月日时;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.实体.Tests
