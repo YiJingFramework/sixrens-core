@@ -18,8 +18,8 @@ namespace SixRens.Core.占例存取.可序列化类型
         }
         public 可序列化占例() { }
 
-        public 可序列化壬式? 壬式 { get; }
-        public string? 断语 { get; set; }
+        public 可序列化壬式? 壬式 { get; init; }
+        public string? 断语 { get; init; }
 
         public 占例 转占例()
         {

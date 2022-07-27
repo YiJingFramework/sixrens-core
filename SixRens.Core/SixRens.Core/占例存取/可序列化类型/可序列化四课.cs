@@ -18,13 +18,13 @@ namespace SixRens.Core.占例存取.可序列化类型
             this.辰阴 = 四课.辰阴.Index;
         }
         public 可序列化四课() { }
-        public Guid 插件 { get; }
-        public int 日 { get; }
-        public int 日阳 { get; }
-        public int 日阴 { get; }
-        public int 辰 { get; }
-        public int 辰阳 { get; }
-        public int 辰阴 { get; }
+        public Guid 插件 { get; init; }
+        public int 日 { get; init; }
+        public int 日阳 { get; init; }
+        public int 日阴 { get; init; }
+        public int 辰 { get; init; }
+        public int 辰阳 { get; init; }
+        public int 辰阴 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         HeavenlyStem I四课.日 => new(日);

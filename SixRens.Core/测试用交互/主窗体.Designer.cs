@@ -41,6 +41,9 @@
             this.插件包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.壬式显示控件1 = new 测试用交互.壬式显示控件();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,12 +88,14 @@
             this.打开占例ToolStripMenuItem.Name = "打开占例ToolStripMenuItem";
             this.打开占例ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.打开占例ToolStripMenuItem.Text = "打开占例";
+            this.打开占例ToolStripMenuItem.Click += new System.EventHandler(this.打开占例ToolStripMenuItem_Click);
             // 
             // 保存占例ToolStripMenuItem
             // 
             this.保存占例ToolStripMenuItem.Name = "保存占例ToolStripMenuItem";
             this.保存占例ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.保存占例ToolStripMenuItem.Text = "保存占例";
+            this.保存占例ToolStripMenuItem.Click += new System.EventHandler(this.保存占例ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -128,10 +133,10 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(383, 28);
+            this.textBox2.Location = new System.Drawing.Point(383, 76);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(365, 430);
+            this.textBox2.Size = new System.Drawing.Size(365, 382);
             this.textBox2.TabIndex = 3;
             // 
             // 壬式显示控件1
@@ -144,11 +149,42 @@
             this.壬式显示控件1.TabIndex = 4;
             this.壬式显示控件1.壬式 = null;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(383, 56);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(32, 17);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "断语";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(383, 28);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(241, 25);
+            this.comboBox1.TabIndex = 6;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(630, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(118, 25);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "查询占断参考";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // 主窗体
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(760, 470);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.壬式显示控件1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.menuStrip1);
@@ -177,5 +213,8 @@
         private ToolStripMenuItem 插件包ToolStripMenuItem;
         private TextBox textBox2;
         private 壬式显示控件 壬式显示控件1;
+        private Label label1;
+        private ComboBox comboBox1;
+        private Button button1;
     }
 }

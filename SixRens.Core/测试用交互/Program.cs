@@ -14,7 +14,9 @@ namespace 测试用交互
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new 主窗体(new 插件包管理器(new DirectoryInfo("插件包")), new 预设管理器(new DirectoryInfo("预设"))));
+            var cjb = new 插件包管理器(new DirectoryInfo("插件包"));
+            var ys = new 预设管理器(new DirectoryInfo("预设"));
+            Application.Run(new 主窗体(cjb, ys));
         }
     }
 }

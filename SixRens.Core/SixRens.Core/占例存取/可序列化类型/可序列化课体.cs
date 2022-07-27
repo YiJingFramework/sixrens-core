@@ -17,6 +17,8 @@ namespace SixRens.Core.占例存取.可序列化类型
         public 可序列化课体() { }
         public Guid 插件 { get; init; }
         public string? 课名 { get; init; }
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public string 课体名 => 课名 ?? string.Empty;
 
         public 课体 转课体()
