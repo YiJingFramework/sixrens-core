@@ -12,7 +12,7 @@ namespace SixRens.Core.插件管理
         private readonly DirectoryInfo _文件夹;
         private readonly List<插件包> _插件包;
 
-        public IReadOnlyCollection<插件包> 插件包 { get; }
+        public IReadOnlyList<插件包> 插件包 { get; }
         public IEnumerable<插件和所属插件包<I地盘插件>> 地盘插件
             => this._插件包.SelectMany(
                 包 => 包.地盘插件,

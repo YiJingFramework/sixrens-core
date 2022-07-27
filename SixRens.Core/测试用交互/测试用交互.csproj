@@ -12,4 +12,13 @@
     <ProjectReference Include="..\SixRens.Core\SixRens.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="壬式天将显示控件.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="壬式天干显示控件.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

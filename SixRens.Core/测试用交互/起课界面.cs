@@ -123,7 +123,7 @@ namespace 测试用交互
             var 年月日时 = (I年月日时信息)this.label2.Tag;
             if (this.comboBox1.SelectedIndex is not 0)
                 年月日时 = 年月日时.修改时间(地支表[((string)this.comboBox1.SelectedItem)[0]]);
-            if (年月日时.检验八字(false))
+            if (!年月日时.检验八字(false))
                 if (MessageBox.Show("指定的年月日时不可能实际存在，要继续吗？", "",
                     MessageBoxButtons.YesNo) is DialogResult.No)
                     return;

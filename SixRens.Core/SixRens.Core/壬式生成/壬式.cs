@@ -30,6 +30,37 @@ namespace SixRens.Core.壬式生成
             }
             return 从天神查地支表;
         }
+        private readonly Dictionary<EarthlyBranch, IReadOnlyList<神煞>> 从地支查神煞表;
+        private static Dictionary<EarthlyBranch, IReadOnlyList<神煞>> 制从地支查神煞表(
+            IReadOnlyList<神煞> 神煞)
+        {
+            var 从地支查神煞表 = new List<神煞>[12] {
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+                new List<神煞>(),
+            };
+
+            foreach (var 煞 in 神煞)
+            {
+                foreach (var 神 in 煞.所在神)
+                {
+                    从地支查神煞表[神.Index - 1].Add(煞);
+                }
+            }
+            return 从地支查神煞表
+                .Select((s, i) => (branch: new EarthlyBranch(i + 1), s: s.ToArray()))
+                .ToDictionary(bs => bs.branch,
+                bs => (IReadOnlyList<神煞>)Array.AsReadOnly(bs.s));
+        }
 
         public 四课 四课 { get; }
         public 三传 三传 { get; }
@@ -49,9 +80,9 @@ namespace SixRens.Core.壬式生成
             地盘 地盘, 天盘 天盘, 
             四课 四课, 三传 三传, 
             天将盘 天将盘, 
-            年命? 课主年命, IReadOnlyList<年命> 对象年命, 
-            IReadOnlyList<神煞> 神煞, 
-            IReadOnlyList<课体> 课体, 
+            年命? 课主年命, IReadOnlyList<年命> 对象年命,
+            IReadOnlyList<神煞> 神煞,
+            IReadOnlyList<课体> 课体,
             IReadOnlyList<占断参考> 占断参考)
         {
             this.年月日时 = 年月日时;
@@ -64,6 +95,7 @@ namespace SixRens.Core.壬式生成
             this.课主年命 = 课主年命;
             this.对象年命 = 对象年命;
             this.神煞 = 神煞;
+            this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
             this.课体 = 课体;
             this.占断参考 = 占断参考;
         }
@@ -132,6 +164,7 @@ namespace SixRens.Core.壬式生成
                         题目)
                     select new 神煞(神煞信息.插件.插件识别码, 题目, 神煞内容);
                 this.神煞 = Array.AsReadOnly(神煞.ToArray());
+                this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
             }
 
             {
@@ -161,21 +194,37 @@ namespace SixRens.Core.壬式生成
             }
         }
 
-        public 天将 取所乘将(EarthlyBranch 天神)
+        public 天将 取乘将(EarthlyBranch 天神)
         {
             return this.天将盘.取乘将(天神);
         }
-        public 天将 取临我将(EarthlyBranch 地盘支)
+        public 天将 取临将(EarthlyBranch 地盘支)
         {
-            return this.天将盘.取乘将(this.取所乘神(地盘支));
+            return this.天将盘.取乘将(this.取上神(地盘支));
         }
-        public EarthlyBranch 取所乘神(EarthlyBranch 地盘支)
+        public EarthlyBranch 取上神(EarthlyBranch 地盘支)
         {
             return this.天盘.取天神(地盘支);
         }
-        public EarthlyBranch 取所临神(EarthlyBranch 天神)
+        public EarthlyBranch 取临地(EarthlyBranch 天神)
         {
             return this.从天神查地支表[天神];
+        }
+        public EarthlyBranch 取旬遁某干之支(HeavenlyStem 天干)
+        {
+            return this.年月日时.旬所在.获取对应地支(天干);
+        }
+        public HeavenlyStem? 取某支旬遁之干(EarthlyBranch 地支)
+        {
+            return this.年月日时.旬所在.获取对应天干(地支);
+        }
+        public (EarthlyBranch, EarthlyBranch) 取旬内空亡二支()
+        {
+            return (this.年月日时.旬所在.空亡一, this.年月日时.旬所在.空亡二);
+        }
+        public IReadOnlyList<神煞> 取神煞(EarthlyBranch 地支)
+        {
+            return 从地支查神煞表[地支];
         }
 
         public 占例 创建占例()

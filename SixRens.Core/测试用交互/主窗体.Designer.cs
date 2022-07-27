@@ -39,8 +39,8 @@
             this.配置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.插件预设ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.插件包ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
+            this.壬式显示控件1 = new 测试用交互.壬式显示控件();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,31 +126,31 @@
             this.插件包ToolStripMenuItem.Text = "插件包";
             this.插件包ToolStripMenuItem.Click += new System.EventHandler(this.插件包ToolStripMenuItem_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 28);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(365, 410);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "点击菜单栏占例起课";
-            // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(383, 28);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(365, 410);
+            this.textBox2.Size = new System.Drawing.Size(365, 430);
             this.textBox2.TabIndex = 3;
+            // 
+            // 壬式显示控件1
+            // 
+            this.壬式显示控件1.AutoScroll = true;
+            this.壬式显示控件1.Enabled = false;
+            this.壬式显示控件1.Location = new System.Drawing.Point(12, 28);
+            this.壬式显示控件1.Name = "壬式显示控件1";
+            this.壬式显示控件1.Size = new System.Drawing.Size(365, 430);
+            this.壬式显示控件1.TabIndex = 4;
+            this.壬式显示控件1.壬式 = null;
             // 
             // 主窗体
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(760, 450);
+            this.ClientSize = new System.Drawing.Size(760, 470);
+            this.Controls.Add(this.壬式显示控件1);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "主窗体";
@@ -175,7 +175,7 @@
         private ToolStripMenuItem 配置ToolStripMenuItem;
         private ToolStripMenuItem 插件预设ToolStripMenuItem;
         private ToolStripMenuItem 插件包ToolStripMenuItem;
-        private TextBox textBox1;
         private TextBox textBox2;
+        private 壬式显示控件 壬式显示控件1;
     }
 }
