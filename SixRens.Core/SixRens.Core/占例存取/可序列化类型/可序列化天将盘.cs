@@ -31,7 +31,7 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 天将盘 转天将盘()
         {
-            return new 天将盘(插件, this);
+            return new 天将盘(this.插件, this);
         }
     }
 }

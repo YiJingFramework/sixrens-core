@@ -1,9 +1,6 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
 using SixRens.Core.壬式生成;
 using System.Text.Json.Serialization;
-using YiJingFramework.Core;
-using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
@@ -19,11 +16,11 @@ namespace SixRens.Core.占例存取.可序列化类型
         public string? 课名 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        public string 课体名 => 课名 ?? string.Empty;
+        public string 课体名 => this.课名 ?? string.Empty;
 
         public 课体 转课体()
         {
-            return new 课体(插件, this);
+            return new 课体(this.插件, this);
         }
     }
 }

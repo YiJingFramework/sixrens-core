@@ -32,7 +32,7 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 地盘 转地盘()
         {
-            return new 地盘(插件, this);
+            return new 地盘(this.插件, this);
         }
     }
 }

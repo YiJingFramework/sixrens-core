@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 
 namespace SixRens.Core.插件管理
 {
@@ -21,7 +15,7 @@ namespace SixRens.Core.插件管理
             }
             private void 触发事件()
             {
-                this.预设.预设被修改?.Invoke(预设, EventArgs.Empty);
+                this.预设.预设被修改?.Invoke(this.预设, EventArgs.Empty);
             }
 
             public T this[int index]

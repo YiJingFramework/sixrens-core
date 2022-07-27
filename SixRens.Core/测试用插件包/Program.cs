@@ -1,7 +1,7 @@
-﻿using System.IO.Compression;
-using System.Reflection;
-using SixRens.Api;
+﻿using SixRens.Api;
 using SixRens.Api.工具;
+using System.IO.Compression;
+using System.Reflection;
 using 测试用插件包;
 
 AssemblyName 主程序集名 = Assembly.GetExecutingAssembly().GetName();
@@ -16,7 +16,7 @@ string[] 要打包的程序集 = new[]
     版本号: $"{主程序集名.Version?.ToString(3)}",
     网址: "一个网址",
     主程序集: $"{主程序集名.Name}.dll",
-    插件类: Assembly.GetExecutingAssembly().GetTypes().Where(type=>type.IsAssignableTo(typeof(I插件)))
+    插件类: Assembly.GetExecutingAssembly().GetTypes().Where(type => type.IsAssignableTo(typeof(I插件)))
     );
 
 

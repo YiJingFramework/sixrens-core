@@ -30,7 +30,7 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 天盘 转天盘()
         {
-            return new 天盘(插件, this);
+            return new 天盘(this.插件, this);
         }
     }
 }

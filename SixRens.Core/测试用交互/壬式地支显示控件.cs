@@ -1,13 +1,4 @@
 ﻿using SixRens.Core.壬式生成;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using YiJingFramework.StemsAndBranches;
 
 namespace 测试用交互
@@ -16,18 +7,18 @@ namespace 测试用交互
     {
         public 壬式地支显示控件()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.地支 = new();
         }
 
         public 壬式? 绑定壬式 { get; set; }
 
         private EarthlyBranch _地支;
-        public EarthlyBranch 地支 
-        { 
+        public EarthlyBranch 地支
+        {
             get
             {
-                return _地支;
+                return this._地支;
             }
             set
             {
@@ -38,9 +29,9 @@ namespace 测试用交互
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (绑定壬式 is null)
+            if (this.绑定壬式 is null)
                 return;
-            new 地支详细信息窗体(绑定壬式, 地支).Show();
+            new 地支详细信息窗体(this.绑定壬式, this.地支).Show();
         }
     }
 }

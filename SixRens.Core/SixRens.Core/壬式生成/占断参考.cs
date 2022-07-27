@@ -1,5 +1,4 @@
-﻿using SixRens.Api;
-using SixRens.Api.实体;
+﻿using SixRens.Api.实体;
 
 namespace SixRens.Core.壬式生成
 {

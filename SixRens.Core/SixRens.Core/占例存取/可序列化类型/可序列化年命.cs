@@ -1,5 +1,4 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
 using SixRens.Core.壬式生成;
 using System.Text.Json.Serialization;
 using YiJingFramework.Core;
@@ -23,17 +22,17 @@ namespace SixRens.Core.占例存取.可序列化类型
         public int 行年 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        YinYang I年命.性别 => new(性别);
+        YinYang I年命.性别 => new(this.性别);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I年命.本命 => new(本命);
+        EarthlyBranch I年命.本命 => new(this.本命);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I年命.行年 => new(行年);
+        EarthlyBranch I年命.行年 => new(this.行年);
 
         public 年命 转年命()
         {
-            return new 年命(插件, this);
+            return new 年命(this.插件, this);
         }
     }
 }

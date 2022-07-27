@@ -1,8 +1,5 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
-using SixRens.Core.壬式生成;
 using SixRens.Core.年月日时;
-using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
@@ -37,16 +34,16 @@ namespace SixRens.Core.占例存取.可序列化类型
         public 自定义年月日时 转年月日时()
         {
             return new(
-                new(年干),
-                new(年支),
-                new(月干),
-                new(月支),
-                new(日干),
-                new(日支),
-                new(时干),
-                new(时支),
-                昼占,
-                new(月将));
+                new(this.年干),
+                new(this.年支),
+                new(this.月干),
+                new(this.月支),
+                new(this.日干),
+                new(this.日支),
+                new(this.时干),
+                new(this.时支),
+                this.昼占,
+                new(this.月将));
         }
     }
 }

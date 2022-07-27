@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace SixRens.Core.插件管理
+﻿namespace SixRens.Core.插件管理
 {
     public sealed partial class 预设
     {
@@ -15,10 +7,10 @@ namespace SixRens.Core.插件管理
         private Guid? _地盘插件;
         public Guid? 地盘插件
         {
-            get { return _地盘插件; }
-            set 
-            { 
-                _地盘插件 = value;
+            get { return this._地盘插件; }
+            set
+            {
+                this._地盘插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -26,10 +18,10 @@ namespace SixRens.Core.插件管理
         private Guid? _天盘插件;
         public Guid? 天盘插件
         {
-            get { return _天盘插件; }
+            get { return this._天盘插件; }
             set
             {
-                _天盘插件 = value;
+                this._天盘插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -37,10 +29,10 @@ namespace SixRens.Core.插件管理
         private Guid? _四课插件;
         public Guid? 四课插件
         {
-            get { return _四课插件; }
+            get { return this._四课插件; }
             set
             {
-                _四课插件 = value;
+                this._四课插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -48,10 +40,10 @@ namespace SixRens.Core.插件管理
         private Guid? _三传插件;
         public Guid? 三传插件
         {
-            get { return _三传插件; }
+            get { return this._三传插件; }
             set
             {
-                _三传插件 = value;
+                this._三传插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -59,10 +51,10 @@ namespace SixRens.Core.插件管理
         private Guid? _天将插件;
         public Guid? 天将插件
         {
-            get { return _天将插件; }
+            get { return this._天将插件; }
             set
             {
-                _天将插件 = value;
+                this._天将插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }
@@ -70,10 +62,10 @@ namespace SixRens.Core.插件管理
         private Guid? _年命插件;
         public Guid? 年命插件
         {
-            get { return _年命插件; }
+            get { return this._年命插件; }
             set
             {
-                _年命插件 = value;
+                this._年命插件 = value;
                 预设被修改?.Invoke(this, EventArgs.Empty);
             }
         }

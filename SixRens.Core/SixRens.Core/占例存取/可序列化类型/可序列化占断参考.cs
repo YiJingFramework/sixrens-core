@@ -1,9 +1,5 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
 using SixRens.Core.壬式生成;
-using System.Text.Json.Serialization;
-using YiJingFramework.Core;
-using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
@@ -23,7 +19,7 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 占断参考 转占断参考()
         {
-            return new 占断参考(插件, this.题目 ?? string.Empty, this);
+            return new 占断参考(this.插件, this.题目 ?? string.Empty, this);
         }
     }
 }

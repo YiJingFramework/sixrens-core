@@ -1,13 +1,8 @@
-﻿using SixRens.Api;
-using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
+﻿using SixRens.Api.实体;
 using SixRens.Core.占例存取;
 using SixRens.Core.年月日时;
 using SixRens.Core.插件管理;
-using System.Collections.ObjectModel;
 using YiJingFramework.StemsAndBranches;
-using static SixRens.Core.插件管理.预设;
-using static SixRens.Core.插件管理.预设.实体题目和所属插件识别码;
 
 namespace SixRens.Core.壬式生成
 {
@@ -76,10 +71,10 @@ namespace SixRens.Core.壬式生成
         public IReadOnlyList<占断参考> 占断参考 { get; }
 
         internal 壬式(
-            I年月日时 年月日时, 
-            地盘 地盘, 天盘 天盘, 
-            四课 四课, 三传 三传, 
-            天将盘 天将盘, 
+            I年月日时 年月日时,
+            地盘 地盘, 天盘 天盘,
+            四课 四课, 三传 三传,
+            天将盘 天将盘,
             年命? 课主年命, IReadOnlyList<年命> 对象年命,
             IReadOnlyList<神煞> 神煞,
             IReadOnlyList<课体> 课体,
@@ -224,7 +219,7 @@ namespace SixRens.Core.壬式生成
         }
         public IReadOnlyList<神煞> 取神煞(EarthlyBranch 地支)
         {
-            return 从地支查神煞表[地支];
+            return this.从地支查神煞表[地支];
         }
 
         public 占例 创建占例()

@@ -1,5 +1,4 @@
-﻿using SixRens.Core;
-using SixRens.Core.插件管理;
+﻿using SixRens.Core.插件管理;
 using System.Data;
 
 namespace 测试用交互
@@ -44,13 +43,13 @@ namespace 测试用交互
         private void button3_Click(object sender, EventArgs e)
         {
             foreach (列表项 s in this.listBox1.SelectedItems)
-                _ = new 插件预设配置窗体(插件包管理器, s.预设).ShowDialog();
+                _ = new 插件预设配置窗体(this.插件包管理器, s.预设).ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             foreach (列表项 s in this.listBox1.SelectedItems)
-                预设管理器.删除预设(s.预设);
+                this.预设管理器.删除预设(s.预设);
             this.更新列表();
         }
     }

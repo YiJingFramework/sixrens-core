@@ -1,13 +1,5 @@
 ﻿using SixRens.Core.壬式生成;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace 测试用交互
 {
@@ -15,7 +7,7 @@ namespace 测试用交互
     {
         public 壬式显示控件()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.壬式 = null;
         }
 
@@ -63,7 +55,7 @@ namespace 测试用交互
             this.辰阳控件.地支 = 壬式.四课.辰阳;
             this.辰阴控件.地支 = 壬式.四课.辰阴;
             this.辰阴乘将控件.天将 = 壬式.取乘将(壬式.四课.辰阴);
-            
+
             var 位置天盘控件表 = new[] {
                 this.子位控件,
                 this.丑位控件,
@@ -104,26 +96,26 @@ namespace 测试用交互
             for (int i = 0; i < 12; i++)
                 位置乘将控件表[i].天将 = 天将盘[i];
 
-            foreach(var 控件 in this.Controls)
+            foreach (var 控件 in this.Controls)
             {
-                if(控件 is 壬式地支显示控件 dz)
+                if (控件 is 壬式地支显示控件 dz)
                 {
                     dz.绑定壬式 = 壬式;
                 }
             }
-    }
+        }
 
         private 壬式? _壬式;
         public 壬式? 壬式
         {
             get
             {
-                return _壬式;
+                return this._壬式;
             }
             set
             {
                 this._壬式 = value;
-                布置控件(value);
+                this.布置控件(value);
             }
         }
     }

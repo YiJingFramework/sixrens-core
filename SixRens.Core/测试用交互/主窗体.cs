@@ -1,10 +1,7 @@
-﻿using SixRens.Api.实体;
-using SixRens.Core;
-using SixRens.Core.占例存取;
+﻿using SixRens.Core.占例存取;
 using SixRens.Core.壬式生成;
 using SixRens.Core.插件管理;
 using System.Diagnostics;
-using System.Text;
 
 namespace 测试用交互
 {
@@ -33,12 +30,12 @@ namespace 测试用交互
 
         private void 起课ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var 起课 = new 起课界面(插件包管理器, 预设管理器);
+            var 起课 = new 起课界面(this.插件包管理器, this.预设管理器);
             if (起课.ShowDialog() is DialogResult.OK)
             {
                 var 壬式 = 起课.所起壬式;
                 Debug.Assert(壬式 is not null);
-                加载占例(壬式.创建占例());
+                this.加载占例(壬式.创建占例());
             }
         }
 
@@ -47,7 +44,7 @@ namespace 测试用交互
         {
             public override string ToString()
             {
-                return $"{参考.题目}";
+                return $"{this.参考.题目}";
             }
         }
 
@@ -65,22 +62,22 @@ namespace 测试用交互
         {
             var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() is DialogResult.OK)
-                加载占例(占例.反序列化(File.ReadAllText(dialog.FileName)));
+                this.加载占例(占例.反序列化(File.ReadAllText(dialog.FileName)));
         }
 
         private void 保存占例ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (占例 is null)
+            if (this.占例 is null)
                 return;
-            占例.断语 = this.textBox2.Text;
+            this.占例.断语 = this.textBox2.Text;
             var dialog = new SaveFileDialog();
             if (dialog.ShowDialog() is DialogResult.OK)
-                File.WriteAllText(dialog.FileName, 占例.序列化());
+                File.WriteAllText(dialog.FileName, this.占例.序列化());
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(this.comboBox1.SelectedItem is 占断参考选项 xx) // not null
+            if (this.comboBox1.SelectedItem is 占断参考选项 xx) // not null
             {
                 new 占断参考内容窗体(xx.参考).Show();
             }

@@ -1,5 +1,4 @@
-﻿using SixRens.Api;
-using SixRens.Api.实体;
+﻿using SixRens.Api.实体;
 using YiJingFramework.Core;
 using YiJingFramework.StemsAndBranches;
 

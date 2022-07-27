@@ -24,17 +24,17 @@ namespace SixRens.Core.占例存取.可序列化类型
         public int 末传 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I三传.初传 => new(初传);
+        EarthlyBranch I三传.初传 => new(this.初传);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I三传.中传 => new(中传);
+        EarthlyBranch I三传.中传 => new(this.中传);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I三传.末传 => new(末传);
+        EarthlyBranch I三传.末传 => new(this.末传);
 
         public 三传 转三传()
         {
-            return new 三传(插件, this);
+            return new 三传(this.插件, this);
         }
     }
 }

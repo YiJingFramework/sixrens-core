@@ -1,14 +1,7 @@
 ﻿using SixRens.Core.名称转换;
 using SixRens.Core.壬式生成;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using YiJingFramework.StemsAndBranches;
 
 namespace 测试用交互
@@ -17,7 +10,7 @@ namespace 测试用交互
     {
         public 地支详细信息窗体(壬式 壬式, EarthlyBranch 地支)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             StringBuilder stringBuilder = new StringBuilder();
             _ = stringBuilder.AppendLine($"{地支.地支名()} {地支.天神名()}");
             _ = stringBuilder.AppendLine(

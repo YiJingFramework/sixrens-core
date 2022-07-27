@@ -1,4 +1,3 @@
-using SixRens.Core;
 using SixRens.Core.插件管理;
 
 namespace 测试用交互

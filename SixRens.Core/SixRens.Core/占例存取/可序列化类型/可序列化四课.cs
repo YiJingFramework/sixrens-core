@@ -27,26 +27,26 @@ namespace SixRens.Core.占例存取.可序列化类型
         public int 辰阴 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        HeavenlyStem I四课.日 => new(日);
+        HeavenlyStem I四课.日 => new(this.日);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I四课.日阳 => new(日阳);
+        EarthlyBranch I四课.日阳 => new(this.日阳);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I四课.日阴 => new(日阴);
+        EarthlyBranch I四课.日阴 => new(this.日阴);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I四课.辰 => new(辰);
+        EarthlyBranch I四课.辰 => new(this.辰);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I四课.辰阳 => new(辰阳);
+        EarthlyBranch I四课.辰阳 => new(this.辰阳);
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        EarthlyBranch I四课.辰阴 => new(辰阴);
+        EarthlyBranch I四课.辰阴 => new(this.辰阴);
 
         public 四课 转四课()
         {
-            return new 四课(插件, this);
+            return new 四课(this.插件, this);
         }
     }
 }

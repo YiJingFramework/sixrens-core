@@ -1,15 +1,4 @@
 ﻿using SixRens.Api;
-using SixRens.Core.插件管理;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static SixRens.Core.插件管理.经过解析的预设;
-using static SixRens.Core.插件管理.预设;
-using static SixRens.Core.插件管理.预设.实体题目和所属插件识别码;
 
 namespace SixRens.Core.插件管理
 {

@@ -36,13 +36,13 @@ namespace SixRens.Core.插件管理
                     Debug.Assert(sender is 预设);
                     this.更新预设文件((预设)sender);
                 };
-                _预设列表.Add(预设);
+                this._预设列表.Add(预设);
             }
         }
 
         public 预设? 新增预设(string 预设名)
         {
-            if (_预设列表.Any(y => y.预设名 == 预设名))
+            if (this._预设列表.Any(y => y.预设名 == 预设名))
                 return null;
 
             var result = new 预设(预设名);
@@ -51,13 +51,13 @@ namespace SixRens.Core.插件管理
                 this.更新预设文件((预设)sender);
             };
             this.更新预设文件(result);
-            _预设列表.Add(result);
+            this._预设列表.Add(result);
             return result;
         }
 
         public void 删除预设(预设 预设)
         {
-            if (_预设列表.Remove(预设))
+            if (this._预设列表.Remove(预设))
                 File.Delete(this.获取预设文件路径(预设.预设名));
         }
 

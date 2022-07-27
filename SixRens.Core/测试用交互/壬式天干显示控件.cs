@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using YiJingFramework.StemsAndBranches;
+﻿using YiJingFramework.StemsAndBranches;
 
 namespace 测试用交互
 {
@@ -21,10 +12,10 @@ namespace 测试用交互
 
         private HeavenlyStem? _天干;
         public HeavenlyStem? 天干
-        { 
+        {
             get
             {
-                return _天干;
+                return this._天干;
             }
             set
             {

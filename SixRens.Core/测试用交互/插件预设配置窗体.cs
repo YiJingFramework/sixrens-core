@@ -1,5 +1,4 @@
 ﻿using SixRens.Api;
-using SixRens.Core;
 using SixRens.Core.插件管理;
 using System.Diagnostics;
 
@@ -158,12 +157,12 @@ namespace 测试用交互
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _ = new 编辑神煞或课体启禁用界面(插件包管理器, 预设, true).ShowDialog();
+            _ = new 编辑神煞或课体启禁用界面(this.插件包管理器, this.预设, true).ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _ = new 编辑神煞或课体启禁用界面(插件包管理器, 预设, false).ShowDialog();
+            _ = new 编辑神煞或课体启禁用界面(this.插件包管理器, this.预设, false).ShowDialog();
         }
 
         private void 选项改变(object? sender, EventArgs e)

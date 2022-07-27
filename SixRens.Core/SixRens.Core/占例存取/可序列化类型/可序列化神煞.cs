@@ -1,8 +1,6 @@
 ﻿using SixRens.Api.实体;
-using SixRens.Api.实体.壬式;
 using SixRens.Core.壬式生成;
 using System.Text.Json.Serialization;
-using YiJingFramework.Core;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
@@ -22,11 +20,11 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         IReadOnlyList<EarthlyBranch> I神煞内容.所在神
-            => (所在神 ?? Array.Empty<int>()).Select(i => new EarthlyBranch(i)).ToArray();
+            => (this.所在神 ?? Array.Empty<int>()).Select(i => new EarthlyBranch(i)).ToArray();
 
         public 神煞 转神煞()
         {
-            return new 神煞(插件, this.神煞名 ?? string.Empty, this);
+            return new 神煞(this.插件, this.神煞名 ?? string.Empty, this);
         }
     }
 }
