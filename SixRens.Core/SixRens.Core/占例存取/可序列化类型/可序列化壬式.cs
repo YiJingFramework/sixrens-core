@@ -52,10 +52,10 @@ namespace SixRens.Core.占例存取.可序列化类型
                 非空化(this.三传).转三传(),
                 非空化(this.天将盘).转天将盘(),
                 this.课主年命?.转年命(),
-                Array.AsReadOnly(非空化(this.对象年命).Select(n => n.转年命()).ToArray()),
-                Array.AsReadOnly(非空化(this.神煞).Select(n => n.转神煞()).ToArray()),
-                Array.AsReadOnly(非空化(this.课体).Select(n => n.转课体()).ToArray()),
-                Array.AsReadOnly(非空化(this.占断参考).Select(n => n.转占断参考()).ToArray()));
+                非空化(this.对象年命).Select(n => n.转年命()),
+                非空化(this.神煞).Select(n => n.转神煞()),
+                非空化(this.课体).Select(n => n.转课体()),
+                非空化(this.占断参考).Select(n => n.转占断参考()));
         }
     }
 }

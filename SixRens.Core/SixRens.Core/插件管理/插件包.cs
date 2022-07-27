@@ -38,53 +38,34 @@ namespace SixRens.Core.插件管理
 
         private static 可序列化插件包信息 获取并解析信息文件(ZipArchive 插件包)
         {
-            ZipArchiveEntry 信息文件项;
-            try
-            {
-                const string 插件包信息文件路径 = "plugin.json";
-                信息文件项 = 插件包.Entries
-                    .Where(项 => 项.FullName is 插件包信息文件路径)
-                    .Single();
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new 插件包读取异常("找不到插件包信息文件", e);
-            }
-            可序列化插件包信息? 可序列化信息文件;
+            const string 插件包信息文件路径 = "plugin.json";
+            var 可能的信息文件项 = 插件包.Entries
+                .Where(项 => 项.FullName is 插件包信息文件路径).ToArray();
+            if (可能的信息文件项.Length is 0)
+                throw new 插件包读取异常("找不到插件包信息文件");
+            var 信息文件项 = 可能的信息文件项[0];
 
+            可序列化插件包信息? 可序列化信息文件;
             try
             {
                 using var 信息文件流 = 信息文件项.Open();
                 可序列化信息文件 = JsonSerializer.Deserialize<可序列化插件包信息>(信息文件流);
             }
-            catch (IOException e)
-            {
-                throw new 插件包读取异常("插件包正在被其他应用访问", e);
-            }
-            catch (InvalidDataException e)
-            {
-                throw new 插件包读取异常("插件包格式不正确", e);
-            }
             catch (JsonException e)
             {
-                throw new 插件包读取异常("插件包信息文件格式不正确", e);
+                throw new 插件包读取异常("插件包信息文件格式不正确。", e);
+            }
+            catch (Exception e)
+            {
+                throw new 插件包读取异常("无法加载插件包信息文件。", e);
             }
 
-            if (可序列化信息文件 is null)
-                throw new 插件包读取异常(
-                    "插件包信息文件格式不正确");
-            if (可序列化信息文件.名称 is null)
-                throw new 插件包读取异常(
-                    $"插件包信息文件缺失必须的{nameof(可序列化插件包信息.名称)}信息");
-            if (可序列化信息文件.版本号 is null)
-                throw new 插件包读取异常(
-                    $"插件包信息文件缺失必须的{nameof(可序列化插件包信息.版本号)}信息");
-            if (可序列化信息文件.主程序集 is null)
-                throw new 插件包读取异常(
-                    $"插件包信息文件缺失必须的{nameof(可序列化插件包信息.主程序集)}信息");
-            if (可序列化信息文件.插件类 is null)
-                throw new 插件包读取异常(
-                    $"插件包信息文件缺失必须的{nameof(可序列化插件包信息.插件类)}信息");
+            if (可序列化信息文件 is null ||
+                可序列化信息文件.名称 is null ||
+                可序列化信息文件.版本号 is null ||
+                可序列化信息文件.主程序集 is null ||
+                可序列化信息文件.插件类 is null)
+                throw new 插件包读取异常("插件包信息文件格式不正确。");
             return 可序列化信息文件;
         }
 
@@ -110,15 +91,7 @@ namespace SixRens.Core.插件管理
                         if (主程序集 is null && 项目.FullName == 主程序集路径)
                             主程序集 = 程序集;
                     }
-                    catch (IOException e)
-                    {
-                        throw new 插件包读取异常("插件包正在被其他应用访问", e);
-                    }
-                    catch (InvalidDataException e)
-                    {
-                        throw new 插件包读取异常("插件包格式不正确", e);
-                    }
-                    catch (BadImageFormatException e)
+                    catch (Exception e)
                     {
                         throw new 插件包读取异常($"无法载入插件包中的程序集：{项目.FullName}", e);
                     }
@@ -137,33 +110,14 @@ namespace SixRens.Core.插件管理
             Type? 插件类;
             try
             {
-                插件类 = 程序集.GetType(类名, false);
+                插件类 = 程序集.GetType(类名, true);
             }
-            catch (ArgumentException e)
-            {
-                throw new 插件包读取异常($"找不到指定插件类：{类名}", e);
-            }
-            catch (FileNotFoundException e)
+            catch (Exception e)
             {
                 throw new 插件包读取异常($"指定插件类加载失败：{类名}", e);
             }
-            catch (FileLoadException e)
-            {
-                throw new 插件包读取异常($"指定插件类加载失败：{类名}", e);
-            }
-            catch (BadImageFormatException e)
-            {
-                throw new 插件包读取异常($"指定插件类加载失败：{类名}", e);
-            }
-            catch (TypeLoadException e)
-            {
-                throw new 插件包读取异常(
-                    $"指定插件类加载失败" +
-                    $"（这可能是由于 SixRens.Api 等基础程序集被重复引用导致的，" +
-                    $"如果你是插件作者，请注意不要把此类程序集放入插件包中）：{类名}", e);
-            }
-            if (插件类 is null)
-                throw new 插件包读取异常($"找不到指定插件类：{类名}");
+
+            Debug.Assert(插件类 is not null);
 
             var 构造函数 = 插件类.GetConstructor(Array.Empty<Type>());
             if (构造函数 is null)
@@ -174,30 +128,15 @@ namespace SixRens.Core.插件管理
             {
                 实例 = 构造函数.Invoke(Array.Empty<object>());
             }
-            catch (MemberAccessException e)
+            catch (Exception e)
             {
-                throw new 插件包读取异常($"指定插件无法通过无参构造函数创建实例：{类名}", e);
-            }
-            catch (TargetInvocationException e)
-            {
-                throw new 插件包读取异常($"实例化指定插件时发生异常：{类名}", e);
-            }
-            catch (NotSupportedException e)
-            {
-                throw new 插件包读取异常($"指定插件无法通过无参构造函数创建实例：{类名}", e);
-            }
-            catch (SecurityException e)
-            {
-                throw new 插件包读取异常($"指定插件无法通过无参构造函数创建实例：{类名}", e);
+                throw new 插件包读取异常($"实例化指定插件类时发生异常：{类名}", e);
             }
 
             if (实例 is I插件 结果)
                 return 结果;
             else
-                throw new 插件包读取异常(
-                    $"指定插件类没有实现插件接口" +
-                    $"（这可能是由于 SixRens.Api 等基础程序集被重复引用导致的，" +
-                    $"如果你是插件作者，请注意不要把此类程序集放入插件包中）：{类名}");
+                throw new 插件包读取异常($"无法将指定插件类的实例转化为接口{nameof(I插件)}：{类名}");
         }
 
         internal 插件包(Stream 插件包流, string 分配识别码)
@@ -233,21 +172,19 @@ namespace SixRens.Core.插件管理
                 if (主程序集 is null)
                     throw new 插件包读取异常("没有找到主程序集");
 
-                List<I地盘插件> 地盘插件 = new();
-                List<I天盘插件> 天盘插件 = new();
-                List<I四课插件> 四课插件 = new();
-                List<I三传插件> 三传插件 = new();
-                List<I天将插件> 天将插件 = new();
-                List<I年命插件> 年命插件 = new();
-                List<I神煞插件> 神煞插件 = new();
-                List<I课体插件> 课体插件 = new();
+                List<I地盘插件> 地盘插件 = new(1);
+                List<I天盘插件> 天盘插件 = new(1);
+                List<I四课插件> 四课插件 = new(1);
+                List<I三传插件> 三传插件 = new(2);
+                List<I天将插件> 天将插件 = new(1);
+                List<I年命插件> 年命插件 = new(1);
+                List<I神煞插件> 神煞插件 = new(2);
+                List<I课体插件> 课体插件 = new(2);
                 List<I参考插件> 参考插件 = new();
                 foreach (var 插件类名 in 信息.插件类)
                 {
                     if (插件类名 is null)
-                        throw new 插件包读取异常(
-                            $"插件包信息文件{nameof(可序列化插件包信息.插件类)}内容不正确，" +
-                            $"不得有为 null 的项");
+                        throw new 插件包读取异常($"插件包信息文件格式不正确");
 
                     var 插件 = 实例化插件(主程序集, 插件类名);
                     if (插件.插件识别码 == Guid.Empty)
@@ -307,15 +244,15 @@ namespace SixRens.Core.插件管理
                             $"此插件不属于任何具体的插件类型：{插件.插件名}（{插件.插件识别码}）");
                 }
 
-                this.地盘插件 = new ReadOnlyCollection<I地盘插件>(地盘插件);
-                this.天盘插件 = new ReadOnlyCollection<I天盘插件>(天盘插件);
-                this.四课插件 = new ReadOnlyCollection<I四课插件>(四课插件);
-                this.三传插件 = new ReadOnlyCollection<I三传插件>(三传插件);
-                this.天将插件 = new ReadOnlyCollection<I天将插件>(天将插件);
-                this.年命插件 = new ReadOnlyCollection<I年命插件>(年命插件);
-                this.神煞插件 = new ReadOnlyCollection<I神煞插件>(神煞插件);
-                this.课体插件 = new ReadOnlyCollection<I课体插件>(课体插件);
-                this.参考插件 = new ReadOnlyCollection<I参考插件>(参考插件);
+                this.地盘插件 = Array.AsReadOnly(地盘插件.ToArray());
+                this.天盘插件 = Array.AsReadOnly(天盘插件.ToArray());
+                this.四课插件 = Array.AsReadOnly(四课插件.ToArray());
+                this.三传插件 = Array.AsReadOnly(三传插件.ToArray());
+                this.天将插件 = Array.AsReadOnly(天将插件.ToArray());
+                this.年命插件 = Array.AsReadOnly(年命插件.ToArray());
+                this.神煞插件 = Array.AsReadOnly(神煞插件.ToArray());
+                this.课体插件 = Array.AsReadOnly(课体插件.ToArray());
+                this.参考插件 = Array.AsReadOnly(参考插件.ToArray());
             }
             catch
             {

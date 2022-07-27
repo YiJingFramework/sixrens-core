@@ -31,7 +31,12 @@ namespace 测试用交互
             if (dia.ShowDialog() is DialogResult.OK)
             {
                 using var file = dia.OpenFile();
-                this.插件包管理器.从外部加载插件包(file);
+                var b = this.插件包管理器.从外部加载插件包(file);
+                if (b is null)
+                {
+                    _ = MessageBox.Show("有插件识别码重复。可能是因为加载了重复的插件包。");
+                    return;
+                }
                 this.刷新列表();
             }
         }

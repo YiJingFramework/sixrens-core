@@ -75,10 +75,10 @@ namespace SixRens.Core.壬式生成
             地盘 地盘, 天盘 天盘,
             四课 四课, 三传 三传,
             天将盘 天将盘,
-            年命? 课主年命, IReadOnlyList<年命> 对象年命,
-            IReadOnlyList<神煞> 神煞,
-            IReadOnlyList<课体> 课体,
-            IReadOnlyList<占断参考> 占断参考)
+            年命? 课主年命, IEnumerable<年命> 对象年命,
+            IEnumerable<神煞> 神煞,
+            IEnumerable<课体> 课体,
+            IEnumerable<占断参考> 占断参考)
         {
             this.年月日时 = 年月日时;
             this.地盘 = 地盘;
@@ -88,11 +88,11 @@ namespace SixRens.Core.壬式生成
             this.三传 = 三传;
             this.天将盘 = 天将盘;
             this.课主年命 = 课主年命;
-            this.对象年命 = 对象年命;
-            this.神煞 = 神煞;
+            this.对象年命 = Array.AsReadOnly(对象年命.ToArray());
+            this.神煞 = Array.AsReadOnly(神煞.ToArray());
             this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
-            this.课体 = 课体;
-            this.占断参考 = 占断参考;
+            this.课体 = Array.AsReadOnly(课体.ToArray());
+            this.占断参考 = Array.AsReadOnly(占断参考.ToArray());
         }
 
         public 壬式(
