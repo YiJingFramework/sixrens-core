@@ -47,7 +47,8 @@ namespace 测试用交互
 
             this.comboBox3.Items.AddRange(
                 预设管理器.预设列表.Select(y => new 预设选择栏项目(y)).ToArray());
-            this.comboBox3.SelectedIndex = 0;
+            if (this.comboBox3.Items.Count is not 0)
+                this.comboBox3.SelectedIndex = 0;
 
             this.本命绑定 = new();
             this.dataGridView1.DataSource = this.本命绑定;

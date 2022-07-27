@@ -5,7 +5,7 @@ namespace SixRens.Core.名称转换
 {
     public static class 名称扩展
     {
-        public static 名称表<天将> 天将简称表 { get; } = new()
+        private static 名称表<天将> 天将简称表 { get; } = new()
         {
             { 天将.贵人, "贵" },
             { 天将.螣蛇, "蛇" },
@@ -28,7 +28,7 @@ namespace SixRens.Core.名称转换
             return 天将.ToString();
         }
 
-        public static 名称表<EarthlyBranch> 天神名称表 { get; } = new()
+        private static 名称表<EarthlyBranch> 天神名称表 { get; } = new()
         {
             { new EarthlyBranch(1), "神后" },
             { new EarthlyBranch(2), "大吉" },
@@ -49,11 +49,6 @@ namespace SixRens.Core.名称转换
             if (天神名称表.TryGetValue(天神, out var 结果))
                 return 结果;
             return 天神.ToString("C");
-        }
-
-        public static string 地支名(this EarthlyBranch 地支)
-        {
-            return 地支.ToString("C");
         }
     }
 }

@@ -15,39 +15,39 @@ namespace SixRens.Core.插件管理
 
         private readonly Dictionary<Guid, 插件和所属插件包<I地盘插件>> _地盘插件;
         public IReadOnlyCollection<插件和所属插件包<I地盘插件>> 地盘插件
-            => _地盘插件.Values;
+            => this._地盘插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I天盘插件>> _天盘插件;
         public IReadOnlyCollection<插件和所属插件包<I天盘插件>> 天盘插件
-            => _天盘插件.Values;
+            => this._天盘插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I四课插件>> _四课插件;
         public IReadOnlyCollection<插件和所属插件包<I四课插件>> 四课插件
-            => _四课插件.Values;
+            => this._四课插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I三传插件>> _三传插件;
         public IReadOnlyCollection<插件和所属插件包<I三传插件>> 三传插件
-            => _三传插件.Values;
+            => this._三传插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I天将插件>> _天将插件;
         public IReadOnlyCollection<插件和所属插件包<I天将插件>> 天将插件
-            => _天将插件.Values;
+            => this._天将插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I年命插件>> _年命插件;
         public IReadOnlyCollection<插件和所属插件包<I年命插件>> 年命插件
-            => _年命插件.Values;
+            => this._年命插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I神煞插件>> _神煞插件;
         public IReadOnlyCollection<插件和所属插件包<I神煞插件>> 神煞插件
-            => _神煞插件.Values;
+            => this._神煞插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I课体插件>> _课体插件;
         public IReadOnlyCollection<插件和所属插件包<I课体插件>> 课体插件
-            => _课体插件.Values;
+            => this._课体插件.Values;
 
         private readonly Dictionary<Guid, 插件和所属插件包<I参考插件>> _参考插件;
         public IReadOnlyCollection<插件和所属插件包<I参考插件>> 参考插件
-            => _参考插件.Values;
+            => this._参考插件.Values;
 
         private string 配置文件路径 => Path.GetFullPath("packages", this._文件夹.FullName);
         private void 更新配置文件()
@@ -162,7 +162,7 @@ namespace SixRens.Core.插件管理
 
             foreach (var 插件 in 包.地盘插件)
             {
-                if(this._地盘插件.ContainsKey(插件.插件识别码))
+                if (this._地盘插件.ContainsKey(插件.插件识别码))
                 {
                     包.插件包上下文.Unload();
                     return null;
@@ -372,15 +372,18 @@ namespace SixRens.Core.插件管理
                 !找出插件(预设.参考插件, this._参考插件, out var 参考插件))
                 return null;
 
-            List<实体题目表和所属插件<I神煞插件>> 神煞插件和启用的神煞 = new();
-            HashSet<实体题目和所属插件识别码> 神煞启用 = new(预设.神煞启用, 哈希器.实例);
+            实体题目和所属插件<I神煞插件>[] 显式指定启用的神煞
+                = new 实体题目和所属插件<I神煞插件>[预设.神煞启用.Count];
+            List<实体题目和所属插件<I神煞插件>> 未显式指定的神煞 = new();
+
+            Dictionary<实体题目和所属插件识别码, int> 神煞启用
+                = 预设.神煞启用.Select((神煞, 序号) => (序号: 序号, 神煞: 神煞))
+                .ToDictionary(序号和神煞 => 序号和神煞.神煞, 序号和神煞 => 序号和神煞.序号);
             HashSet<实体题目和所属插件识别码> 神煞禁用 = new(预设.神煞禁用, 哈希器.实例);
 
-            bool 存在未显式指定的神煞 = false;
             bool 存在同时指定了启用和禁用的神煞 = false;
             foreach (var 插件 in 神煞插件)
             {
-                List<string> 题目 = new();
                 foreach (var 神煞名 in 插件.支持的神煞)
                 {
                     var 神煞 = new 实体题目和所属插件识别码(神煞名.神煞名, 插件.插件识别码);
@@ -391,26 +394,32 @@ namespace SixRens.Core.插件管理
                         continue;
                     }
 
-                    if (!神煞启用.Remove(神煞))
-                        存在未显式指定的神煞 = true;
+                    if (神煞启用.Remove(神煞, out int 序号))
+                    {
+                        显式指定启用的神煞[序号] = new(插件, 神煞.题目);
+                        continue;
+                    }
 
-                    题目.Add(神煞名.神煞名);
+                    未显式指定的神煞.Add(new(插件, 神煞.题目));
                     continue;
                 }
-                神煞插件和启用的神煞.Add(new(插件, (IEnumerable<string>)题目));
             }
+            bool 存在未显式指定的神煞 = 未显式指定的神煞.Count > 0;
             bool 存在指定启用但未找到的神煞 = 神煞启用.Count > 0;
 
 
-            List<实体题目表和所属插件<I课体插件>> 课体插件和启用的课体 = new();
-            HashSet<实体题目和所属插件识别码> 课体启用 = new(预设.课体启用, 哈希器.实例);
+            实体题目和所属插件<I课体插件>[] 显式指定启用的课体
+                = new 实体题目和所属插件<I课体插件>[预设.课体启用.Count];
+            List<实体题目和所属插件<I课体插件>> 未显式指定的课体 = new();
+
+            Dictionary<实体题目和所属插件识别码, int> 课体启用
+                = 预设.课体启用.Select((课体, 序号) => (序号: 序号, 课体: 课体))
+                .ToDictionary(序号和课体 => 序号和课体.课体, 序号和课体 => 序号和课体.序号);
             HashSet<实体题目和所属插件识别码> 课体禁用 = new(预设.课体禁用, 哈希器.实例);
 
-            bool 存在未显式指定的课体 = false;
             bool 存在同时指定了启用和禁用的课体 = false;
             foreach (var 插件 in 课体插件)
             {
-                List<string> 题目 = new();
                 foreach (var 课体名 in 插件.支持的课体)
                 {
                     var 课体 = new 实体题目和所属插件识别码(课体名.课体名, 插件.插件识别码);
@@ -421,15 +430,18 @@ namespace SixRens.Core.插件管理
                         continue;
                     }
 
-                    if (!课体启用.Remove(课体))
-                        存在未显式指定的课体 = true;
+                    if (课体启用.Remove(课体, out int 序号))
+                    {
+                        显式指定启用的课体[序号] = new(插件, 课体.题目);
+                        continue;
+                    }
 
-                    题目.Add(课体名.课体名);
+                    未显式指定的课体.Add(new(插件, 课体.题目));
                     continue;
                 }
-                课体插件和启用的课体.Add(new(插件, (IEnumerable<string>)题目));
             }
-            bool 存在指定启用但未找到的课体 = 课体启用.Count > 0;
+            bool 存在未显式指定的课体 = 未显式指定的课体.Count > 0;
+            bool 存在指定启用但未找到的课体 = 神煞启用.Count > 0;
 
             return new(
                 地盘插件,
@@ -438,11 +450,11 @@ namespace SixRens.Core.插件管理
                 三传插件,
                 天将插件,
                 年命插件,
-                神煞插件和启用的神煞,
+                显式指定启用的神煞.Concat(未显式指定的神煞),
                 存在未显式指定的神煞,
                 存在指定启用但未找到的神煞,
                 存在同时指定了启用和禁用的神煞,
-                课体插件和启用的课体,
+                显式指定启用的课体.Concat(未显式指定的课体),
                 存在未显式指定的课体,
                 存在指定启用但未找到的课体,
                 存在同时指定了启用和禁用的课体,

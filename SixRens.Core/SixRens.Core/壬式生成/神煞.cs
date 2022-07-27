@@ -1,5 +1,4 @@
 ﻿using SixRens.Api.实体;
-using System.Collections.ObjectModel;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.壬式生成

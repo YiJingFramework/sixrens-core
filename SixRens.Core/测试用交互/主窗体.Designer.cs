@@ -74,39 +74,40 @@
             // 起课ToolStripMenuItem
             // 
             this.起课ToolStripMenuItem.Name = "起课ToolStripMenuItem";
-            this.起课ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.起课ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.起课ToolStripMenuItem.Text = "起课";
             this.起课ToolStripMenuItem.Click += new System.EventHandler(this.起课ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(121, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // 打开占例ToolStripMenuItem
             // 
             this.打开占例ToolStripMenuItem.Name = "打开占例ToolStripMenuItem";
-            this.打开占例ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.打开占例ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.打开占例ToolStripMenuItem.Text = "打开占例";
             this.打开占例ToolStripMenuItem.Click += new System.EventHandler(this.打开占例ToolStripMenuItem_Click);
             // 
             // 保存占例ToolStripMenuItem
             // 
             this.保存占例ToolStripMenuItem.Name = "保存占例ToolStripMenuItem";
-            this.保存占例ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.保存占例ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.保存占例ToolStripMenuItem.Text = "保存占例";
             this.保存占例ToolStripMenuItem.Click += new System.EventHandler(this.保存占例ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(121, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
             // 导出占例ToolStripMenuItem
             // 
             this.导出占例ToolStripMenuItem.Name = "导出占例ToolStripMenuItem";
-            this.导出占例ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.导出占例ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.导出占例ToolStripMenuItem.Text = "导出占例";
+            this.导出占例ToolStripMenuItem.Click += new System.EventHandler(this.导出占例ToolStripMenuItem_Click);
             // 
             // 配置ToolStripMenuItem
             // 
@@ -136,6 +137,7 @@
             this.textBox2.Location = new System.Drawing.Point(383, 76);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
+            this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox2.Size = new System.Drawing.Size(365, 382);
             this.textBox2.TabIndex = 3;
             // 

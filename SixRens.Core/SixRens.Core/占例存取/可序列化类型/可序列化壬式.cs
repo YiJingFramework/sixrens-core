@@ -31,6 +31,7 @@ namespace SixRens.Core.占例存取.可序列化类型
         public 可序列化年命[]? 对象年命 { get; init; }
         public 可序列化神煞[]? 神煞 { get; init; }
         public 可序列化课体[]? 课体 { get; init; }
+        public 可序列化课体[]? 启用的课体 { get; init; }
         public 可序列化占断参考[]? 占断参考 { get; init; }
 
         private static T 非空化<T>(T? t) where T : new()
@@ -55,6 +56,7 @@ namespace SixRens.Core.占例存取.可序列化类型
                 非空化(this.对象年命).Select(n => n.转年命()),
                 非空化(this.神煞).Select(n => n.转神煞()),
                 非空化(this.课体).Select(n => n.转课体()),
+                非空化(this.启用的课体).Select(n => n.转课体()),
                 非空化(this.占断参考).Select(n => n.转占断参考()));
         }
     }

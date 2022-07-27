@@ -6,7 +6,7 @@ using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.壬式生成
 {
-    public sealed partial class 壬式
+    public sealed class 壬式
     {
         public I年月日时 年月日时 { get; }
 
@@ -67,6 +67,7 @@ namespace SixRens.Core.壬式生成
 
         public IReadOnlyList<神煞> 神煞 { get; }
         public IReadOnlyList<课体> 课体 { get; }
+        public IReadOnlyList<课体> 启用的课体 { get; }
 
         public IReadOnlyList<占断参考> 占断参考 { get; }
 
@@ -78,6 +79,7 @@ namespace SixRens.Core.壬式生成
             年命? 课主年命, IEnumerable<年命> 对象年命,
             IEnumerable<神煞> 神煞,
             IEnumerable<课体> 课体,
+            IEnumerable<课体> 启用的课体,
             IEnumerable<占断参考> 占断参考)
         {
             this.年月日时 = 年月日时;
@@ -92,6 +94,7 @@ namespace SixRens.Core.壬式生成
             this.神煞 = Array.AsReadOnly(神煞.ToArray());
             this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
             this.课体 = Array.AsReadOnly(课体.ToArray());
+            this.启用的课体 = Array.AsReadOnly(启用的课体.ToArray());
             this.占断参考 = Array.AsReadOnly(占断参考.ToArray());
         }
 
@@ -151,27 +154,40 @@ namespace SixRens.Core.壬式生成
 
             {
                 var 神煞 =
-                    from 神煞信息 in 预设.神煞插件和启用的神煞
-                    from 题目 in 神煞信息.题目
-                    let 神煞内容 = 神煞信息.插件.获取神煞(
+                    from 神煞和插件 in 预设.启用的神煞和所属插件
+                    let 插件 = 神煞和插件.插件
+                    let 神煞名 = 神煞和插件.题目
+                    let 神煞内容 = 插件.获取神煞(
                         this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
                         this.天将盘, this.课主年命, this.对象年命,
-                        题目)
-                    select new 神煞(神煞信息.插件.插件识别码, 题目, 神煞内容);
+                        神煞名)
+                    select new 神煞(插件.插件识别码, 神煞名, 神煞内容);
                 this.神煞 = Array.AsReadOnly(神煞.ToArray());
                 this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
             }
 
             {
-                var 课体 =
-                    from 课体信息 in 预设.课体插件和启用的课体
-                    let 启用课体 = new HashSet<string>(课体信息.题目)
-                    let 识别出的课体 = 课体信息.插件.识别课体(
-                        this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
-                        this.天将盘, this.课主年命, this.对象年命, this.神煞)
-                    from 题目 in 识别出的课体
-                    where 启用课体.Contains(题目.课体名)
-                    select new 课体(课体信息.插件.插件识别码, 题目);
+                Dictionary<Guid, HashSet<string>> 识别出的课体 = new();
+                List<课体> 课体 = new(预设.启用的课体和所属插件.Count);
+                foreach (var 课体和插件 in 预设.启用的课体和所属插件)
+                {
+                    var 识别码 = 课体和插件.插件.插件识别码;
+                    if (!识别出的课体.ContainsKey(识别码))
+                    {
+                        var 当前识别出的课体 = 课体和插件.插件.识别课体(
+                            this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
+                            this.天将盘, this.课主年命, this.对象年命, this.神煞);
+                        识别出的课体.Add(识别码, new(当前识别出的课体.Select(课体 => 课体.课体名)));
+                    }
+                    if (识别出的课体[识别码].Contains(课体和插件.题目))
+                        课体.Add(new 课体(识别码, 课体和插件.题目));
+                }
+
+                this.启用的课体 = Array.AsReadOnly(
+                    预设.启用的课体和所属插件
+                    .Select(课体和插件 => new 课体(课体和插件.插件.插件识别码, 课体和插件.题目))
+                    .ToArray());
+
                 this.课体 = Array.AsReadOnly(课体.ToArray());
             }
 

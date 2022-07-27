@@ -35,7 +35,9 @@ namespace 测试用交互
             {
                 var 壬式 = 起课.所起壬式;
                 Debug.Assert(壬式 is not null);
-                this.加载占例(壬式.创建占例());
+                var 占例 = 壬式.创建占例();
+                占例.断语 = $"{占例.可读文本化()}";
+                this.加载占例(占例);
             }
         }
 
@@ -73,6 +75,22 @@ namespace 测试用交互
             var dialog = new SaveFileDialog();
             if (dialog.ShowDialog() is DialogResult.OK)
                 File.WriteAllText(dialog.FileName, this.占例.序列化());
+        }
+
+        private void 导出占例ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.占例 is null)
+                return;
+
+            var r = MessageBox.Show("直接保存右侧断语？", "", MessageBoxButtons.YesNoCancel);
+            if (r is DialogResult.Cancel)
+                return;
+
+            this.占例.断语 = this.textBox2.Text;
+            var dialog = new SaveFileDialog();
+            if (dialog.ShowDialog() is DialogResult.OK)
+                File.WriteAllText(dialog.FileName,
+                    r is DialogResult.Yes ? this.textBox2.Text : this.占例.可读文本化());
         }
 
         private void button1_Click(object sender, EventArgs e)
