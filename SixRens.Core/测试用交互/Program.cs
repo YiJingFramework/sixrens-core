@@ -1,4 +1,6 @@
 using SixRens.Core.插件管理;
+using SixRens.Core.插件管理.插件包管理;
+using SixRens.Core.插件管理.预设管理;
 
 namespace 测试用交互
 {
@@ -13,8 +15,10 @@ namespace 测试用交互
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            var cjb = new 插件包管理器(new DirectoryInfo("插件包"));
-            var ys = new 预设管理器(new DirectoryInfo("预设"));
+
+            var 储存器 = new 储存器("储存");
+            var cjb = new 插件包管理器(储存器);
+            var ys = new 预设管理器(储存器);
             Application.Run(new 主窗体(cjb, ys));
         }
     }

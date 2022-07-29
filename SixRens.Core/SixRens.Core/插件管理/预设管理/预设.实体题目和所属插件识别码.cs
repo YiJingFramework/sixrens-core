@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace SixRens.Core.插件管理
+namespace SixRens.Core.插件管理.预设管理
 {
     public sealed partial class 预设
     {

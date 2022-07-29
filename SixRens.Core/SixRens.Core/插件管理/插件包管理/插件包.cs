@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.Loader;
 using System.Text.Json;
 
-namespace SixRens.Core.插件管理
+namespace SixRens.Core.插件管理.插件包管理
 {
     public sealed class 插件包
     {

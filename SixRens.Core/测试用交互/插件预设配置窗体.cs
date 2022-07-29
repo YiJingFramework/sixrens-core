@@ -1,5 +1,7 @@
 ﻿using SixRens.Api;
 using SixRens.Core.插件管理;
+using SixRens.Core.插件管理.插件包管理;
+using SixRens.Core.插件管理.预设管理;
 using System.Diagnostics;
 
 namespace 测试用交互
@@ -112,16 +114,16 @@ namespace 测试用交互
             this.预设 = 预设;
             this.InitializeComponent();
 
-            this.初始化ListView(this.listView1, 插件包管理器.地盘插件, 预设.地盘插件, id => 预设.地盘插件 = id);
-            this.初始化ListView(this.listView2, 插件包管理器.天盘插件, 预设.天盘插件, id => 预设.天盘插件 = id);
-            this.初始化ListView(this.listView3, 插件包管理器.四课插件, 预设.四课插件, id => 预设.四课插件 = id);
-            this.初始化ListView(this.listView4, 插件包管理器.三传插件, 预设.三传插件, id => 预设.三传插件 = id);
-            this.初始化ListView(this.listView5, 插件包管理器.天将插件, 预设.天将插件, id => 预设.天将插件 = id);
-            this.初始化ListView(this.listView6, 插件包管理器.年命插件, 预设.年命插件, id => 预设.年命插件 = id);
+            this.初始化ListView(this.listView1, 插件包管理器.地盘插件.Values, 预设.地盘插件, id => 预设.地盘插件 = id);
+            this.初始化ListView(this.listView2, 插件包管理器.天盘插件.Values, 预设.天盘插件, id => 预设.天盘插件 = id);
+            this.初始化ListView(this.listView3, 插件包管理器.四课插件.Values, 预设.四课插件, id => 预设.四课插件 = id);
+            this.初始化ListView(this.listView4, 插件包管理器.三传插件.Values, 预设.三传插件, id => 预设.三传插件 = id);
+            this.初始化ListView(this.listView5, 插件包管理器.天将插件.Values, 预设.天将插件, id => 预设.天将插件 = id);
+            this.初始化ListView(this.listView6, 插件包管理器.年命插件.Values, 预设.年命插件, id => 预设.年命插件 = id);
 
-            this.初始化ListView(this.listView7, 插件包管理器.神煞插件, 预设.神煞插件);
-            this.初始化ListView(this.listView8, 插件包管理器.课体插件, 预设.课体插件);
-            this.初始化ListView(this.listView9, 插件包管理器.参考插件, 预设.参考插件);
+            this.初始化ListView(this.listView7, 插件包管理器.神煞插件.Values, 预设.神煞插件);
+            this.初始化ListView(this.listView8, 插件包管理器.课体插件.Values, 预设.课体插件);
+            this.初始化ListView(this.listView9, 插件包管理器.参考插件.Values, 预设.参考插件);
 
             this.button3.Click += (_, _) => this.另外添加(this.listView1);
             this.button4.Click += (_, _) => this.另外添加(this.listView2);
@@ -149,7 +151,7 @@ namespace 测试用交互
                 if (itid == id)
                     return;
             }
-            listView.Items.Add(
+            _ = listView.Items.Add(
                 new ListViewItem(id.ToString()) {
                     Tag = id
                 });

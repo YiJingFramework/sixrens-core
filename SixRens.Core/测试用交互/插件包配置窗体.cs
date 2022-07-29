@@ -1,4 +1,5 @@
 ﻿using SixRens.Core.插件管理;
+using SixRens.Core.插件管理.插件包管理;
 using System.Data;
 
 namespace 测试用交互

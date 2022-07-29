@@ -1,164 +1,132 @@
 ﻿using SixRens.Api;
+using SixRens.Core.插件管理.预设管理;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
-using static SixRens.Core.插件管理.经过解析的预设;
-using static SixRens.Core.插件管理.预设;
-using static SixRens.Core.插件管理.预设.实体题目和所属插件识别码;
+using static SixRens.Core.插件管理.预设管理.经过解析的预设;
+using static SixRens.Core.插件管理.预设管理.预设;
+using static SixRens.Core.插件管理.预设管理.预设.实体题目和所属插件识别码;
 
-namespace SixRens.Core.插件管理
+namespace SixRens.Core.插件管理.插件包管理
 {
     public class 插件包管理器
     {
-        private readonly DirectoryInfo _文件夹;
+        private readonly I插件包管理器储存器 _储存器;
         private readonly List<插件包> _插件包;
         public IReadOnlyList<插件包> 插件包 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I地盘插件>> _地盘插件;
-        public IReadOnlyCollection<插件和所属插件包<I地盘插件>> 地盘插件
-            => this._地盘插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>> 地盘插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I天盘插件>> _天盘插件;
-        public IReadOnlyCollection<插件和所属插件包<I天盘插件>> 天盘插件
-            => this._天盘插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>> 天盘插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I四课插件>> _四课插件;
-        public IReadOnlyCollection<插件和所属插件包<I四课插件>> 四课插件
-            => this._四课插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>> 四课插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I三传插件>> _三传插件;
-        public IReadOnlyCollection<插件和所属插件包<I三传插件>> 三传插件
-            => this._三传插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>> 三传插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I天将插件>> _天将插件;
-        public IReadOnlyCollection<插件和所属插件包<I天将插件>> 天将插件
-            => this._天将插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>> 天将插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I年命插件>> _年命插件;
-        public IReadOnlyCollection<插件和所属插件包<I年命插件>> 年命插件
-            => this._年命插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>> 年命插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I神煞插件>> _神煞插件;
-        public IReadOnlyCollection<插件和所属插件包<I神煞插件>> 神煞插件
-            => this._神煞插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>> 神煞插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I课体插件>> _课体插件;
-        public IReadOnlyCollection<插件和所属插件包<I课体插件>> 课体插件
-            => this._课体插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I课体插件>> 课体插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I参考插件>> _参考插件;
-        public IReadOnlyCollection<插件和所属插件包<I参考插件>> 参考插件
-            => this._参考插件.Values;
+        public IReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>> 参考插件 { get; }
 
-        private string 配置文件路径 => Path.GetFullPath("packages", this._文件夹.FullName);
-        private void 更新配置文件()
+        public 插件包管理器(I插件包管理器储存器 插件包管理器储存器)
         {
-            using var writer = File.CreateText(this.配置文件路径);
-            foreach (var 名称 in this._插件包)
-                writer.WriteLine(名称.本地识别码);
-        }
-        private FileInfo 新建随机文件
-        {
-            get
-            {
-                for (; ; )
-                {
-                    var result = Path.GetFullPath(Path.GetRandomFileName(), this._文件夹.FullName);
-                    FileInfo info = new FileInfo(result);
-                    if (!info.Exists)
-                        return info;
-                }
-            }
-        }
-
-        public 插件包管理器(DirectoryInfo 插件包储存文件夹)
-        {
-            this._文件夹 = 插件包储存文件夹;
-            this._文件夹.Create();
+            this._储存器 = 插件包管理器储存器;
             this._插件包 = new();
             this.插件包 = new ReadOnlyCollection<插件包>(this._插件包);
 
             this._地盘插件 = new();
+            this.地盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>>(_地盘插件);
             this._天盘插件 = new();
+            this.天盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>>(_天盘插件);
             this._四课插件 = new();
+            this.四课插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>>(_四课插件);
             this._三传插件 = new();
+            this.三传插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>>(_三传插件);
             this._天将插件 = new();
+            this.天将插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>>(_天将插件);
             this._年命插件 = new();
+            this.年命插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>>(_年命插件);
             this._神煞插件 = new();
+            this.神煞插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>>(_神煞插件);
             this._课体插件 = new();
+            this.课体插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I课体插件>>(_课体插件);
             this._参考插件 = new();
+            this.参考插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>>(_参考插件);
 
-            var info = new FileInfo(this.配置文件路径);
-            if (info.Exists)
+            foreach (var (插件包名, 插件包文件) in this._储存器.获取所有插件包文件())
             {
-                var lines = File.ReadAllLines(info.FullName);
-                foreach (var fileName in lines)
+                插件包 包 = new 插件包(插件包文件, 插件包名);
+                try
                 {
-                    var path = Path.GetFullPath(fileName, this._文件夹.FullName);
-                    using var s = new FileStream(path, FileMode.Open);
-                    插件包 包 = new 插件包(s, fileName);
-
-                    try
+                    foreach (var 插件 in 包.地盘插件)
                     {
-                        foreach (var 插件 in 包.地盘插件)
-                        {
-                            this._地盘插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.天盘插件)
-                        {
-                            this._天盘插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.四课插件)
-                        {
-                            this._四课插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.三传插件)
-                        {
-                            this._三传插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.天将插件)
-                        {
-                            this._天将插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.年命插件)
-                        {
-                            this._年命插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.神煞插件)
-                        {
-                            this._神煞插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.课体插件)
-                        {
-                            this._课体插件.Add(插件.插件识别码, new(插件, 包));
-                        }
-                        foreach (var 插件 in 包.参考插件)
-                        {
-                            this._参考插件.Add(插件.插件识别码, new(插件, 包));
-                        }
+                        this._地盘插件.Add(插件.插件识别码, new(插件, 包));
                     }
-                    catch
+                    foreach (var 插件 in 包.天盘插件)
                     {
-                        包.插件包上下文.Unload();
-                        throw;
+                        this._天盘插件.Add(插件.插件识别码, new(插件, 包));
                     }
-
-                    this._插件包.Add(包);
+                    foreach (var 插件 in 包.四课插件)
+                    {
+                        this._四课插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.三传插件)
+                    {
+                        this._三传插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.天将插件)
+                    {
+                        this._天将插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.年命插件)
+                    {
+                        this._年命插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.神煞插件)
+                    {
+                        this._神煞插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.课体插件)
+                    {
+                        this._课体插件.Add(插件.插件识别码, new(插件, 包));
+                    }
+                    foreach (var 插件 in 包.参考插件)
+                    {
+                        this._参考插件.Add(插件.插件识别码, new(插件, 包));
+                    }
                 }
+                catch
+                {
+                    包.插件包上下文.Unload();
+                    foreach (var 插件包 in this._插件包)
+                        插件包.插件包上下文.Unload();
+                    throw;
+                }
+                this._插件包.Add(包);
             }
         }
 
         /// <returns>成功加载但有重复识别码时，将卸载之，并会返回 null 。</returns>
         public 插件包? 从外部加载插件包(Stream 插件包流)
         {
-            var info = this.新建随机文件;
-            插件包 包;
-            using (var file = info.Open(FileMode.CreateNew))
-            {
-                插件包流.CopyTo(file);
-                file.Flush();
-                file.Position = 0;
-                包 = new 插件包(插件包流, info.Name);
-            }
+            var 插件包流复制 = new MemoryStream();
+            插件包流.CopyTo(插件包流复制);
+
+            var 包名 = this._储存器.生成新的插件包名();
+            插件包 包 = new 插件包(插件包流复制, 包名);
 
             foreach (var 插件 in 包.地盘插件)
             {
@@ -233,52 +201,61 @@ namespace SixRens.Core.插件管理
                 }
             }
 
-            foreach (var 插件 in 包.地盘插件)
+            try
             {
-                this._地盘插件.Add(插件.插件识别码, new(插件, 包));
+                插件包流复制.Position = 0;
+                this._储存器.储存插件包文件(包名, 插件包流复制);
+                foreach (var 插件 in 包.地盘插件)
+                {
+                    this._地盘插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.天盘插件)
+                {
+                    this._天盘插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.四课插件)
+                {
+                    this._四课插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.三传插件)
+                {
+                    this._三传插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.天将插件)
+                {
+                    this._天将插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.年命插件)
+                {
+                    this._年命插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.神煞插件)
+                {
+                    this._神煞插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.课体插件)
+                {
+                    this._课体插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                foreach (var 插件 in 包.参考插件)
+                {
+                    this._参考插件.Add(插件.插件识别码, new(插件, 包));
+                }
+                this._插件包.Add(包);
+                return 包;
             }
-            foreach (var 插件 in 包.天盘插件)
+            catch
             {
-                this._天盘插件.Add(插件.插件识别码, new(插件, 包));
+                包.插件包上下文.Unload();
+                throw;
             }
-            foreach (var 插件 in 包.四课插件)
-            {
-                this._四课插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.三传插件)
-            {
-                this._三传插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.天将插件)
-            {
-                this._天将插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.年命插件)
-            {
-                this._年命插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.神煞插件)
-            {
-                this._神煞插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.课体插件)
-            {
-                this._课体插件.Add(插件.插件识别码, new(插件, 包));
-            }
-            foreach (var 插件 in 包.参考插件)
-            {
-                this._参考插件.Add(插件.插件识别码, new(插件, 包));
-            }
-
-            this._插件包.Add(包);
-            this.更新配置文件();
-            return 包;
         }
 
         public void 移除插件包(插件包 包, bool 卸载上下文 = true)
         {
             if (this._插件包.Remove(包))
             {
+                this._储存器.移除插件包文件(包.名称);
                 foreach (var 插件 in 包.地盘插件)
                 {
                     _ = this._地盘插件.Remove(插件.插件识别码);
@@ -318,7 +295,6 @@ namespace SixRens.Core.插件管理
 
                 if (卸载上下文)
                     包.插件包上下文.Unload();
-                this.更新配置文件();
             }
         }
 
@@ -377,7 +353,7 @@ namespace SixRens.Core.插件管理
             List<实体题目和所属插件<I神煞插件>> 未显式指定的神煞 = new();
 
             Dictionary<实体题目和所属插件识别码, int> 神煞启用
-                = 预设.神煞启用.Select((神煞, 序号) => (序号: 序号, 神煞: 神煞))
+                = 预设.神煞启用.Select((神煞, 序号) => (序号, 神煞))
                 .ToDictionary(序号和神煞 => 序号和神煞.神煞, 序号和神煞 => 序号和神煞.序号);
             HashSet<实体题目和所属插件识别码> 神煞禁用 = new(预设.神煞禁用, 哈希器.实例);
 
@@ -413,7 +389,7 @@ namespace SixRens.Core.插件管理
             List<实体题目和所属插件<I课体插件>> 未显式指定的课体 = new();
 
             Dictionary<实体题目和所属插件识别码, int> 课体启用
-                = 预设.课体启用.Select((课体, 序号) => (序号: 序号, 课体: 课体))
+                = 预设.课体启用.Select((课体, 序号) => (序号, 课体))
                 .ToDictionary(序号和课体 => 序号和课体.课体, 序号和课体 => 序号和课体.序号);
             HashSet<实体题目和所属插件识别码> 课体禁用 = new(预设.课体禁用, 哈希器.实例);
 

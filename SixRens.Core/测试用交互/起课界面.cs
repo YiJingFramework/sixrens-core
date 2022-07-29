@@ -1,6 +1,8 @@
 ﻿using SixRens.Core.壬式生成;
 using SixRens.Core.年月日时;
 using SixRens.Core.插件管理;
+using SixRens.Core.插件管理.插件包管理;
+using SixRens.Core.插件管理.预设管理;
 using System.ComponentModel;
 using System.Data;
 using YiJingFramework.Core;

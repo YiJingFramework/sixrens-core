@@ -1,4 +1,6 @@
 ﻿using SixRens.Core.插件管理;
+using SixRens.Core.插件管理.插件包管理;
+using SixRens.Core.插件管理.预设管理;
 using System.ComponentModel;
 using System.Data;
 
@@ -45,7 +47,7 @@ namespace 测试用交互
             if (this.模式为神煞或课体)
             {
                 HashSet<Guid> 欲找 = new HashSet<Guid>(this.预设.神煞插件);
-                foreach (var 插件 in this.插件包管理器.神煞插件)
+                foreach (var 插件 in this.插件包管理器.神煞插件.Values)
                 {
                     var 识别码 = 插件.插件.插件识别码;
                     if (欲找.Remove(识别码))
@@ -64,7 +66,7 @@ namespace 测试用交互
             else
             {
                 HashSet<Guid> 欲找 = new HashSet<Guid>(this.预设.课体插件);
-                foreach (var 插件 in this.插件包管理器.课体插件)
+                foreach (var 插件 in this.插件包管理器.课体插件.Values)
                 {
                     var 识别码 = 插件.插件.插件识别码;
                     if (欲找.Remove(识别码))

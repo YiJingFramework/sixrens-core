@@ -1,6 +1,6 @@
 ﻿using SixRens.Api;
 
-namespace SixRens.Core.插件管理
+namespace SixRens.Core.插件管理.预设管理
 {
     public sealed partial class 经过解析的预设
     {
