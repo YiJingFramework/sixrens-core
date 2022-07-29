@@ -66,9 +66,9 @@ namespace SixRens.Core.插件管理.插件包管理
             this._参考插件 = new();
             this.参考插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>>(_参考插件);
 
-            foreach (var (插件包名, 插件包文件) in this._储存器.获取所有插件包文件())
+            foreach (var (插件包识别码, 插件包文件) in this._储存器.获取所有插件包文件())
             {
-                插件包 包 = new 插件包(插件包文件, 插件包名);
+                插件包 包 = new 插件包(插件包文件, 插件包识别码);
                 try
                 {
                     foreach (var 插件 in 包.地盘插件)
@@ -125,8 +125,8 @@ namespace SixRens.Core.插件管理.插件包管理
             var 插件包流复制 = new MemoryStream();
             插件包流.CopyTo(插件包流复制);
 
-            var 包名 = this._储存器.生成新的插件包名();
-            插件包 包 = new 插件包(插件包流复制, 包名);
+            var 包本地识别码 = this._储存器.生成新的插件包文件名();
+            插件包 包 = new 插件包(插件包流复制, 包本地识别码);
 
             foreach (var 插件 in 包.地盘插件)
             {
@@ -204,7 +204,7 @@ namespace SixRens.Core.插件管理.插件包管理
             try
             {
                 插件包流复制.Position = 0;
-                this._储存器.储存插件包文件(包名, 插件包流复制);
+                this._储存器.储存插件包文件(包本地识别码, 插件包流复制);
                 foreach (var 插件 in 包.地盘插件)
                 {
                     this._地盘插件.Add(插件.插件识别码, new(插件, 包));
@@ -255,7 +255,7 @@ namespace SixRens.Core.插件管理.插件包管理
         {
             if (this._插件包.Remove(包))
             {
-                this._储存器.移除插件包文件(包.名称);
+                this._储存器.移除插件包文件(包.本地识别码);
                 foreach (var 插件 in 包.地盘插件)
                 {
                     _ = this._地盘插件.Remove(插件.插件识别码);

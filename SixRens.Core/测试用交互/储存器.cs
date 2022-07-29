@@ -31,7 +31,7 @@ namespace 测试用交互
             插件包.CopyTo(f);
         }
 
-        public string 生成新的插件包名()
+        public string 生成新的插件包文件名()
         {
             for(; ; )
             {
@@ -49,7 +49,7 @@ namespace 测试用交互
             file.Delete();
         }
 
-        public IEnumerable<(string 插件包名, Stream 插件包)> 获取所有插件包文件()
+        public IEnumerable<(string 插件包文件名, Stream 插件包)> 获取所有插件包文件()
         {
             return _文件夹.EnumerateFiles()
                 .Where(file => file.Name.StartsWith("srspg_"))
