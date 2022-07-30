@@ -13,7 +13,7 @@ namespace 测试用插件包.插件
 
         private sealed record 神煞(
             string 神煞名,
-            IReadOnlyList<EarthlyBranch> 所在神) : I神煞题目, I神煞内容
+            IReadOnlyList<EarthlyBranch> 所在神) : I神煞
         { }
 
         private static readonly 神煞[] 神煞表 = new[]

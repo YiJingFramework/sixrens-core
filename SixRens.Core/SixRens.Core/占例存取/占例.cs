@@ -75,7 +75,10 @@ namespace SixRens.Core.占例存取
             string 生成字符串(EarthlyBranch 支)
             {
                 var 旬 = this.壬式.年月日时.旬所在;
-                var 落空 = 旬.获取对应天干(this.壬式.取临地(支)).HasValue ? $"{空格}{空格}" : "落空";
+                var 临地 = this.壬式.取临地(支);
+                var 落空 = 临地.HasValue ?
+                    旬.获取对应天干(临地.Value).HasValue ? $"{空格}{空格}" : "落空" 
+                    : $"{空格}{空格}";
                 var 六亲 = this.壬式.年月日时.日干.判断六亲(支);
                 var 遁干 = 旬.获取对应天干(支)?.ToString("C") ?? 空格;
                 var 天将 = this.壬式.取乘将(支).简称();

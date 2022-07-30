@@ -19,7 +19,7 @@ namespace SixRens.Core.占例存取.可序列化类型
         public int[]? 所在神 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        IReadOnlyList<EarthlyBranch> I神煞内容.所在神
+        IEnumerable<EarthlyBranch> I神煞内容.所在神
             => (this.所在神 ?? Array.Empty<int>()).Select(i => new EarthlyBranch(i)).ToArray();
 
         public 神煞 转神煞()

@@ -4,6 +4,7 @@ using SixRens.Core.年月日时;
 using SixRens.Core.插件管理;
 using SixRens.Core.插件管理.预设管理;
 using YiJingFramework.StemsAndBranches;
+using static SixRens.Api.工具.天盘扩展;
 
 namespace SixRens.Core.壬式生成
 {
@@ -14,18 +15,8 @@ namespace SixRens.Core.壬式生成
         public 地盘 地盘 { get; }
         public 天盘 天盘 { get; }
 
-        private readonly Dictionary<EarthlyBranch, EarthlyBranch> 从天神查地支表;
-        private static Dictionary<EarthlyBranch, EarthlyBranch> 制从天神查地支表(天盘 天盘)
-        {
-            var 从天神查地支表 = new Dictionary<EarthlyBranch, EarthlyBranch>(12);
-            for (int i = 1; i <= 12; i++)
-            {
-                var 地支 = new EarthlyBranch(i);
-                var 天神 = 天盘.取天神(地支);
-                从天神查地支表.Add(天神, 地支);
-            }
-            return 从天神查地支表;
-        }
+        private readonly 可逆天盘 可逆天盘;
+
         private readonly Dictionary<EarthlyBranch, IReadOnlyList<神煞>> 从地支查神煞表;
         private static Dictionary<EarthlyBranch, IReadOnlyList<神煞>> 制从地支查神煞表(
             IReadOnlyList<神煞> 神煞)
@@ -84,7 +75,7 @@ namespace SixRens.Core.壬式生成
             this.年月日时 = 年月日时;
             this.地盘 = 地盘;
             this.天盘 = 天盘;
-            this.从天神查地支表 = 制从天神查地支表(this.天盘);
+            this.可逆天盘 = this.天盘.可逆化();
             this.四课 = 四课;
             this.三传 = 三传;
             this.天将盘 = 天将盘;
@@ -114,7 +105,7 @@ namespace SixRens.Core.壬式生成
             {
                 var 天盘 = 预设.天盘插件.获取天盘(壬式识别码, this.年月日时, this.地盘);
                 this.天盘 = new 天盘(预设.天盘插件.插件识别码, 天盘);
-                this.从天神查地支表 = 制从天神查地支表(this.天盘);
+                this.可逆天盘 = this.天盘.可逆化();
             }
 
             {
@@ -205,9 +196,9 @@ namespace SixRens.Core.壬式生成
         {
             return this.天盘.取天神(地盘支);
         }
-        public EarthlyBranch 取临地(EarthlyBranch 天神)
+        public EarthlyBranch? 取临地(EarthlyBranch 天神)
         {
-            return this.从天神查地支表[天神];
+            return this.可逆天盘.取临地(天神);
         }
         public EarthlyBranch 取旬遁某干之支(HeavenlyStem 天干)
         {
