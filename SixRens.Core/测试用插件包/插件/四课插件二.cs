@@ -23,7 +23,7 @@ namespace 测试用插件包.插件
 
         public EarthlyBranch 辰阴 => new(2);
 
-        public I四课 获取四课(I年月日时 年月日时, I地盘 地盘, I天盘 天盘)
+        public I四课 获取四课(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘)
         {
             return this;
         }

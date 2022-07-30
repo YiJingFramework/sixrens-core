@@ -16,7 +16,7 @@ namespace 测试用插件包.插件
             return 位置.Next(-1);
         }
 
-        public I地盘 获取地盘(I年月日时 年月日时)
+        public I地盘 获取地盘(Guid 壬式识别码, I年月日时 年月日时)
         {
             return this;
         }

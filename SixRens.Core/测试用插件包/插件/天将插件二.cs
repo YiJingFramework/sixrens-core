@@ -16,7 +16,7 @@ namespace 测试用插件包.插件
             return (天将)(天神.Index + 1);
         }
 
-        public I天将盘 获取天将盘(I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传)
+        public I天将盘 获取天将盘(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传)
         {
             return this;
         }

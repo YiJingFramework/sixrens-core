@@ -24,7 +24,7 @@ namespace 测试用插件包.插件
         };
         public IEnumerable<I神煞题目> 支持的神煞 => 神煞表;
 
-        public I神煞内容 获取神煞(I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传, I天将盘 天将盘, I年命? 课主年命, IReadOnlyList<I年命> 对象年命, string 神煞题目)
+        public I神煞内容 获取神煞(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传, I天将盘 天将盘, I年命? 课主年命, IReadOnlyList<I年命> 对象年命, string 神煞题目)
         {
             return 神煞表.Where(s => s.神煞名 == 神煞题目).Single();
         }

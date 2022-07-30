@@ -16,7 +16,7 @@ namespace 测试用插件包.插件
             return 地盘支.Next();
         }
 
-        public I天盘 获取天盘(I年月日时 年月日时, I地盘 地盘)
+        public I天盘 获取天盘(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘)
         {
             return this;
         }

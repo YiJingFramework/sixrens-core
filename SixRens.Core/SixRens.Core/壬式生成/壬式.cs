@@ -68,7 +68,6 @@ namespace SixRens.Core.壬式生成
 
         public IReadOnlyList<神煞> 神煞 { get; }
         public IReadOnlyList<课体> 课体 { get; }
-        public IReadOnlyList<课体> 启用的课体 { get; }
 
         public IReadOnlyList<占断参考> 占断参考 { get; }
 
@@ -80,7 +79,6 @@ namespace SixRens.Core.壬式生成
             年命? 课主年命, IEnumerable<年命> 对象年命,
             IEnumerable<神煞> 神煞,
             IEnumerable<课体> 课体,
-            IEnumerable<课体> 启用的课体,
             IEnumerable<占断参考> 占断参考)
         {
             this.年月日时 = 年月日时;
@@ -95,7 +93,6 @@ namespace SixRens.Core.壬式生成
             this.神煞 = Array.AsReadOnly(神煞.ToArray());
             this.从地支查神煞表 = 制从地支查神煞表(this.神煞);
             this.课体 = Array.AsReadOnly(课体.ToArray());
-            this.启用的课体 = Array.AsReadOnly(启用的课体.ToArray());
             this.占断参考 = Array.AsReadOnly(占断参考.ToArray());
         }
 
@@ -105,31 +102,33 @@ namespace SixRens.Core.壬式生成
             IEnumerable<本命信息> 对象本命,
             经过解析的预设 预设)
         {
+            Guid 壬式识别码 = 壬式识别码生成器.新识别码;
+
             this.年月日时 = 年月日时.生成年月日时();
 
             {
-                var 地盘 = 预设.地盘插件.获取地盘(this.年月日时);
+                var 地盘 = 预设.地盘插件.获取地盘(壬式识别码, this.年月日时);
                 this.地盘 = new 地盘(预设.地盘插件.插件识别码, 地盘);
             }
 
             {
-                var 天盘 = 预设.天盘插件.获取天盘(this.年月日时, this.地盘);
+                var 天盘 = 预设.天盘插件.获取天盘(壬式识别码, this.年月日时, this.地盘);
                 this.天盘 = new 天盘(预设.天盘插件.插件识别码, 天盘);
                 this.从天神查地支表 = 制从天神查地支表(this.天盘);
             }
 
             {
-                var 四课 = 预设.四课插件.获取四课(this.年月日时, this.地盘, this.天盘);
+                var 四课 = 预设.四课插件.获取四课(壬式识别码, this.年月日时, this.地盘, this.天盘);
                 this.四课 = new 四课(预设.四课插件.插件识别码, 四课);
             }
 
             {
-                var 三传 = 预设.三传插件.获取三传(this.年月日时, this.地盘, this.天盘, this.四课);
+                var 三传 = 预设.三传插件.获取三传(壬式识别码, this.年月日时, this.地盘, this.天盘, this.四课);
                 this.三传 = new 三传(预设.三传插件.插件识别码, 三传);
             }
 
             {
-                var 天将盘 = 预设.天将插件.获取天将盘(
+                var 天将盘 = 预设.天将插件.获取天将盘(壬式识别码,
                     this.年月日时, this.地盘, this.天盘, this.四课, this.三传);
                 this.天将盘 = new 天将盘(预设.天将插件.插件识别码, 天将盘);
             }
@@ -137,7 +136,7 @@ namespace SixRens.Core.壬式生成
             if (课主本命 is not null)
             {
                 I年命 年命;
-                年命 = 预设.年命插件.获取年命(
+                年命 = 预设.年命插件.获取年命(壬式识别码,
                     this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
                     课主本命.性别, 课主本命.本命);
                 this.课主年命 = new 年命(预设.年命插件.插件识别码, 年命);
@@ -146,7 +145,7 @@ namespace SixRens.Core.壬式生成
             {
                 var 对象年命 =
                     from 本命 in 对象本命
-                    let 年命 = 预设.年命插件.获取年命(
+                    let 年命 = 预设.年命插件.获取年命(壬式识别码,
                         this.年月日时, this.地盘, this.天盘, this.四课, this.三传, this.天将盘,
                         本命.性别, 本命.本命)
                     select new 年命(预设.年命插件.插件识别码, 年命);
@@ -158,7 +157,7 @@ namespace SixRens.Core.壬式生成
                     from 神煞和插件 in 预设.启用的神煞和所属插件
                     let 插件 = 神煞和插件.插件
                     let 神煞名 = 神煞和插件.题目
-                    let 神煞内容 = 插件.获取神煞(
+                    let 神煞内容 = 插件.获取神煞(壬式识别码,
                         this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
                         this.天将盘, this.课主年命, this.对象年命,
                         神煞名)
@@ -168,27 +167,15 @@ namespace SixRens.Core.壬式生成
             }
 
             {
-                Dictionary<Guid, HashSet<string>> 识别出的课体 = new();
-                List<课体> 课体 = new(预设.启用的课体和所属插件.Count);
-                foreach (var 课体和插件 in 预设.启用的课体和所属插件)
-                {
-                    var 识别码 = 课体和插件.插件.插件识别码;
-                    if (!识别出的课体.ContainsKey(识别码))
-                    {
-                        var 当前识别出的课体 = 课体和插件.插件.识别课体(
-                            this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
-                            this.天将盘, this.课主年命, this.对象年命, this.神煞);
-                        识别出的课体.Add(识别码, new(当前识别出的课体.Select(课体 => 课体.课体名)));
-                    }
-                    if (识别出的课体[识别码].Contains(课体和插件.题目))
-                        课体.Add(new 课体(识别码, 课体和插件.题目));
-                }
-
-                this.启用的课体 = Array.AsReadOnly(
-                    预设.启用的课体和所属插件
-                    .Select(课体和插件 => new 课体(课体和插件.插件.插件识别码, 课体和插件.题目))
-                    .ToArray());
-
+                var 课体 =
+                    from 课体和插件 in 预设.启用的课体和所属插件
+                    let 插件 = 课体和插件.插件
+                    let 课体名 = 课体和插件.题目
+                    let 课体内容 = 插件.识别课体(壬式识别码,
+                        this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
+                        this.天将盘, this.课主年命, this.对象年命, this.神煞,
+                        课体名)
+                    select new 课体(插件.插件识别码, 课体名, 课体内容);
                 this.课体 = Array.AsReadOnly(课体.ToArray());
             }
 
@@ -197,7 +184,7 @@ namespace SixRens.Core.壬式生成
                     from 插件 in 预设.参考插件
                     from 参考题目 in 插件.支持的占断参考
                     let 题目字符串 = 参考题目.题目
-                    let 参考内容 = 插件.生成占断参考(
+                    let 参考内容 = 插件.生成占断参考(壬式识别码,
                         this.年月日时, this.地盘, this.天盘, this.四课, this.三传,
                         this.天将盘, this.课主年命, this.对象年命, this.神煞, this.课体,
                         题目字符串)
