@@ -1,6 +1,5 @@
 ﻿using SixRens.Core.占例存取;
 using SixRens.Core.壬式生成;
-using SixRens.Core.插件管理;
 using SixRens.Core.插件管理.插件包管理;
 using SixRens.Core.插件管理.预设管理;
 using System.Diagnostics;
@@ -35,9 +34,8 @@ namespace 测试用交互
             var 起课 = new 起课界面(this.插件包管理器, this.预设管理器);
             if (起课.ShowDialog() is DialogResult.OK)
             {
-                var 壬式 = 起课.所起壬式;
-                Debug.Assert(壬式 is not null);
-                var 占例 = 壬式.创建占例();
+                var 占例 = 起课.所起壬式;
+                Debug.Assert(占例 is not null);
                 占例.断语 = $"{占例.可读文本化()}";
                 this.加载占例(占例);
             }

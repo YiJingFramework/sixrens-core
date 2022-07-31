@@ -49,14 +49,14 @@ namespace SixRens.Core.插件管理.预设管理
         public void 删除预设(预设 预设)
         {
             if (this._预设列表.Remove(预设))
-                _储存器.移除预设文件(预设.预设名);
+                this._储存器.移除预设文件(预设.预设名);
         }
 
         private void 更新预设文件(预设 预设)
         {
             var 序列化信息 = 预设.生成序列化信息();
             var s = JsonSerializer.Serialize(序列化信息);
-            _储存器.储存预设文件(预设.预设名, s);
+            this._储存器.储存预设文件(预设.预设名, s);
         }
     }
 }

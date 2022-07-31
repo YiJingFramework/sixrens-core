@@ -13,11 +13,13 @@ namespace SixRens.Core.占例存取
     {
         public 壬式 壬式 { get; }
         public string 断语 { get; set; }
+        public DateTime? 西历时间 { get; set; }
 
-        internal 占例(壬式 壬式, string 断语 = "")
+        internal 占例(壬式 壬式, string 断语, DateTime? 西历时间)
         {
             this.壬式 = 壬式;
             this.断语 = 断语;
+            this.西历时间 = 西历时间;
         }
 
         public string 序列化()
@@ -43,8 +45,10 @@ namespace SixRens.Core.占例存取
                 $"{this.壬式.年月日时.月将:C}将")
                 .AppendLine(
                 $"{this.壬式.年月日时.旬所在.旬首干:C}{this.壬式.年月日时.旬所在.旬首支:C}旬{空格}" +
-                $"{this.壬式.年月日时.旬所在.空亡一:C}{this.壬式.年月日时.旬所在.空亡二:C}空")
-                .AppendLine();
+                $"{this.壬式.年月日时.旬所在.空亡一:C}{this.壬式.年月日时.旬所在.空亡二:C}空");
+            if(西历时间.HasValue)
+                _ = builder.AppendLine(西历时间.Value.ToString($"西历{空格}yyyy/MM/dd HH:mm"));
+            _ = builder.AppendLine();
         }
 
         private void 追加年命(StringBuilder builder)
@@ -77,7 +81,7 @@ namespace SixRens.Core.占例存取
                 var 旬 = this.壬式.年月日时.旬所在;
                 var 临地 = this.壬式.取临地(支);
                 var 落空 = 临地.HasValue ?
-                    旬.获取对应天干(临地.Value).HasValue ? $"{空格}{空格}" : "落空" 
+                    旬.获取对应天干(临地.Value).HasValue ? $"{空格}{空格}" : "落空"
                     : $"{空格}{空格}";
                 var 六亲 = this.壬式.年月日时.日干.判断六亲(支);
                 var 遁干 = 旬.获取对应天干(支)?.ToString("C") ?? 空格;

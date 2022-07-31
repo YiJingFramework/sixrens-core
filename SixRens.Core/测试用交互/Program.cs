@@ -1,4 +1,3 @@
-using SixRens.Core.插件管理;
 using SixRens.Core.插件管理.插件包管理;
 using SixRens.Core.插件管理.预设管理;
 

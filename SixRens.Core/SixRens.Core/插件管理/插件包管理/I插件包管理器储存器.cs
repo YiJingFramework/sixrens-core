@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SixRens.Core.插件管理.插件包管理
+﻿namespace SixRens.Core.插件管理.插件包管理
 {
     public interface I插件包管理器储存器
     {

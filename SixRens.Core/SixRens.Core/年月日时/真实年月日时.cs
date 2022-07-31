@@ -16,11 +16,19 @@ namespace SixRens.Core.年月日时
         public bool 昼占 { get; }
         public EarthlyBranch 月将 { get; }
 
+        public DateTime? 西历日期对象 { get; }
+        public Lunar 农历日期对象 { get; }
+
         public 真实年月日时(DateTime 日期)
-            : this(Lunar.fromDate(日期)) { }
+            : this(Lunar.fromDate(日期)) 
+        {
+            this.西历日期对象 = 日期;
+        }
 
         public 真实年月日时(Lunar 日期)
         {
+            this.农历日期对象 = 日期;
+
             var 八字 = 日期.getEightChar();
             八字.setSect(1);
 

@@ -48,23 +48,23 @@ namespace SixRens.Core.插件管理.插件包管理
             this.插件包 = new ReadOnlyCollection<插件包>(this._插件包);
 
             this._地盘插件 = new();
-            this.地盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>>(_地盘插件);
+            this.地盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>>(this._地盘插件);
             this._天盘插件 = new();
-            this.天盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>>(_天盘插件);
+            this.天盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>>(this._天盘插件);
             this._四课插件 = new();
-            this.四课插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>>(_四课插件);
+            this.四课插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>>(this._四课插件);
             this._三传插件 = new();
-            this.三传插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>>(_三传插件);
+            this.三传插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>>(this._三传插件);
             this._天将插件 = new();
-            this.天将插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>>(_天将插件);
+            this.天将插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>>(this._天将插件);
             this._年命插件 = new();
-            this.年命插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>>(_年命插件);
+            this.年命插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>>(this._年命插件);
             this._神煞插件 = new();
-            this.神煞插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>>(_神煞插件);
+            this.神煞插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>>(this._神煞插件);
             this._课体插件 = new();
-            this.课体插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I课体插件>>(_课体插件);
+            this.课体插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I课体插件>>(this._课体插件);
             this._参考插件 = new();
-            this.参考插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>>(_参考插件);
+            this.参考插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>>(this._参考插件);
 
             foreach (var (插件包识别码, 插件包文件) in this._储存器.获取所有插件包文件())
             {

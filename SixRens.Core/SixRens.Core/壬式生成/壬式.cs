@@ -1,7 +1,6 @@
 ﻿using SixRens.Api.实体;
 using SixRens.Core.占例存取;
 using SixRens.Core.年月日时;
-using SixRens.Core.插件管理;
 using SixRens.Core.插件管理.预设管理;
 using YiJingFramework.StemsAndBranches;
 using static SixRens.Api.工具.天盘扩展;
@@ -219,7 +218,7 @@ namespace SixRens.Core.壬式生成
 
         public 占例 创建占例()
         {
-            return new 占例(this);
+            return new 占例(this, string.Empty, null);
         }
     }
 }

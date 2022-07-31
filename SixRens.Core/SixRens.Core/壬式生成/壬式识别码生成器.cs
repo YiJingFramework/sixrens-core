@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Concurrent;
 
 namespace SixRens.Core.壬式生成
 {
     internal static class 壬式识别码生成器
     {
-        private readonly static ConcurrentDictionary<Guid, byte> 曾用识别码 = new();
+        private static readonly ConcurrentDictionary<Guid, byte> 曾用识别码 = new();
 
         public static Guid 新识别码
         {

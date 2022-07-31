@@ -1,6 +1,6 @@
-﻿using SixRens.Core.壬式生成;
+﻿using SixRens.Core.占例存取;
+using SixRens.Core.壬式生成;
 using SixRens.Core.年月日时;
-using SixRens.Core.插件管理;
 using SixRens.Core.插件管理.插件包管理;
 using SixRens.Core.插件管理.预设管理;
 using System.ComponentModel;
@@ -113,7 +113,7 @@ namespace 测试用交互
             }
         }
 
-        internal 壬式? 所起壬式 { get; private set; }
+        internal 占例? 所起壬式 { get; private set; }
         private void button2_Click(object sender, EventArgs e)
         {
             var 年月日时 = (I年月日时信息)this.label2.Tag;
@@ -137,7 +137,7 @@ namespace 测试用交互
                 {
                     if (课主 is not null)
                     {
-                        MessageBox.Show("只能有一个课主");
+                        _ = MessageBox.Show("只能有一个课主");
                         return;
                     }
                     课主 = new 本命信息(
@@ -172,7 +172,9 @@ namespace 测试用交互
             if (预设.存在未显式指定的课体)
                 _ = MessageBox.Show("存在未显式指定的课体，这些课体会视为启用。");
 
-            this.所起壬式 = new 壬式(年月日时, 课主, 对象, 预设);
+            this.所起壬式 = new 壬式(年月日时, 课主, 对象, 预设).创建占例();
+            if(年月日时 is 真实年月日时 真实)
+                this.所起壬式.西历时间 = 真实.西历日期对象;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
