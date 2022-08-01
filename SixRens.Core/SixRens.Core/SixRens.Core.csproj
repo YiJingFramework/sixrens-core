@@ -8,7 +8,7 @@
     <Company>YiJingFramework</Company>
     <Product>SixRens.Core</Product>
     <PackageId>SixRens.Core</PackageId>
-    <Version>1.14.0</Version>
+    <Version>1.14.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/YiJingFramework/sixrens-core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
