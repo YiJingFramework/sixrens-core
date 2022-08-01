@@ -1,4 +1,6 @@
-﻿namespace SixRens.Core.插件管理.预设管理
+﻿using System.Text.Json;
+
+namespace SixRens.Core.插件管理.预设管理
 {
     public sealed partial class 预设
     {
@@ -106,9 +108,9 @@
             this.课体禁用 = new 绑定列表<实体题目和所属插件识别码>(this, 信息.课体禁用);
         }
 
-        internal 可序列化信息 生成序列化信息()
+        internal string 序列化()
         {
-            return new 可序列化信息() {
+            var 可序列化 = new 可序列化信息() {
                 地盘插件 = this.地盘插件,
                 天盘插件 = this.天盘插件,
                 四课插件 = this.四课插件,
@@ -123,6 +125,13 @@
                 课体启用 = new(this.课体启用),
                 课体禁用 = new(this.课体禁用)
             };
+            return JsonSerializer.Serialize(可序列化);
+        }
+
+        internal static 预设 反序列化(string 预设名, string s)
+        {
+            var 可序列化 = JsonSerializer.Deserialize<可序列化信息>(s);
+            return new 预设(预设名, 可序列化);
         }
     }
 }

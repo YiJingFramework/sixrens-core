@@ -52,6 +52,12 @@ namespace 测试用交互
                 (Stream)file.Open(FileMode.Open, FileAccess.Read)));
         }
 
+        public Stream 获取插件包文件(string 插件包文件名)
+        {
+            var file = 从插件包名获取文件(插件包文件名);
+            return file.OpenRead();
+        }
+
         private FileInfo 从预设名获取文件(string 预设名)
         {
             var path = Path.GetFullPath($"preset_{预设名}", this._文件夹.FullName);

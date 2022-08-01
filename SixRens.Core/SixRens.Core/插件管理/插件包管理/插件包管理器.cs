@@ -251,6 +251,11 @@ namespace SixRens.Core.插件管理.插件包管理
             }
         }
 
+        public Stream 导出插件包文件(插件包 包)
+        {
+            return this._储存器.获取插件包文件(包.本地识别码);
+        }
+
         public void 移除插件包(插件包 包, bool 卸载上下文 = true)
         {
             if (this._插件包.Remove(包))
