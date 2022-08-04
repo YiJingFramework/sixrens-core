@@ -1,6 +1,7 @@
 ﻿using SixRens.Api.实体;
+using SixRens.Api.实体.起课信息;
 using YiJingFramework.StemsAndBranches;
-using static SixRens.Api.实体.I年月日时;
+using static SixRens.Api.实体.起课信息.I年月日时;
 
 namespace SixRens.Core.年月日时
 {

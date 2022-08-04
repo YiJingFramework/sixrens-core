@@ -1,4 +1,5 @@
 ﻿using SixRens.Api.实体;
+using SixRens.Api.实体.起课信息;
 using SixRens.Core.年月日时;
 
 namespace SixRens.Core.占例存取.可序列化类型

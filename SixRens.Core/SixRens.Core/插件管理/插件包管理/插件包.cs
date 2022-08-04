@@ -23,12 +23,8 @@ namespace SixRens.Core.插件管理.插件包管理
         public string? 网址 { get; }
         public string 本地识别码 { get; }
 
-        public IReadOnlyList<I地盘插件> 地盘插件 { get; }
-        public IReadOnlyList<I天盘插件> 天盘插件 { get; }
-        public IReadOnlyList<I四课插件> 四课插件 { get; }
         public IReadOnlyList<I三传插件> 三传插件 { get; }
         public IReadOnlyList<I天将插件> 天将插件 { get; }
-        public IReadOnlyList<I年命插件> 年命插件 { get; }
         public IReadOnlyList<I神煞插件> 神煞插件 { get; }
         public IReadOnlyList<I课体插件> 课体插件 { get; }
         public IReadOnlyList<I参考插件> 参考插件 { get; }
@@ -170,12 +166,8 @@ namespace SixRens.Core.插件管理.插件包管理
                 if (主程序集 is null)
                     throw new 插件包读取异常("没有找到主程序集");
 
-                List<I地盘插件> 地盘插件 = new(1);
-                List<I天盘插件> 天盘插件 = new(1);
-                List<I四课插件> 四课插件 = new(1);
                 List<I三传插件> 三传插件 = new(2);
                 List<I天将插件> 天将插件 = new(1);
-                List<I年命插件> 年命插件 = new(1);
                 List<I神煞插件> 神煞插件 = new(2);
                 List<I课体插件> 课体插件 = new(2);
                 List<I参考插件> 参考插件 = new();
@@ -191,21 +183,6 @@ namespace SixRens.Core.插件管理.插件包管理
 
                     bool 已储存 = false;
 
-                    if (插件 is I地盘插件 地盘)
-                    {
-                        地盘插件.Add(地盘);
-                        已储存 = true;
-                    }
-                    if (插件 is I天盘插件 天盘)
-                    {
-                        天盘插件.Add(天盘);
-                        已储存 = true;
-                    }
-                    if (插件 is I四课插件 四课)
-                    {
-                        四课插件.Add(四课);
-                        已储存 = true;
-                    }
                     if (插件 is I三传插件 三传)
                     {
                         三传插件.Add(三传);
@@ -214,11 +191,6 @@ namespace SixRens.Core.插件管理.插件包管理
                     if (插件 is I天将插件 天将)
                     {
                         天将插件.Add(天将);
-                        已储存 = true;
-                    }
-                    if (插件 is I年命插件 年命)
-                    {
-                        年命插件.Add(年命);
                         已储存 = true;
                     }
                     if (插件 is I神煞插件 神煞)
@@ -242,12 +214,8 @@ namespace SixRens.Core.插件管理.插件包管理
                             $"此插件不属于任何具体的插件类型：{插件.插件名}（{插件.插件识别码}）");
                 }
 
-                this.地盘插件 = Array.AsReadOnly(地盘插件.ToArray());
-                this.天盘插件 = Array.AsReadOnly(天盘插件.ToArray());
-                this.四课插件 = Array.AsReadOnly(四课插件.ToArray());
                 this.三传插件 = Array.AsReadOnly(三传插件.ToArray());
                 this.天将插件 = Array.AsReadOnly(天将插件.ToArray());
-                this.年命插件 = Array.AsReadOnly(年命插件.ToArray());
                 this.神煞插件 = Array.AsReadOnly(神煞插件.ToArray());
                 this.课体插件 = Array.AsReadOnly(课体插件.ToArray());
                 this.参考插件 = Array.AsReadOnly(参考插件.ToArray());

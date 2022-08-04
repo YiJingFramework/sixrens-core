@@ -1,21 +1,34 @@
 ﻿using SixRens.Api.实体.壬式;
+using SixRens.Api.实体.起课信息;
+using SixRens.Api.工具;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.壬式生成
 {
     public sealed class 四课 : I四课
     {
-        internal 四课(Guid 所用插件, I四课 四课)
+        internal 四课(I年月日时 年月日时, I天地盘 天地盘)
         {
-            this.所用插件 = 所用插件;
-            this.日 = 四课.日;
-            this.日阳 = 四课.日阳;
-            this.日阴 = 四课.日阴;
-            this.辰 = 四课.辰;
-            this.辰阳 = 四课.辰阳;
-            this.辰阴 = 四课.辰阴;
+            {
+                var 日 = 年月日时.日干;
+                var 日阳 = 天地盘.取乘神(日.寄宫());
+                var 日阴 = 天地盘.取乘神(日阳);
+
+                this.日 = 日;
+                this.日阳 = 日阳;
+                this.日阴 = 日阴;
+            }
+
+            {
+                var 辰 = 年月日时.日支;
+                var 辰阳 = 天地盘.取乘神(辰);
+                var 辰阴 = 天地盘.取乘神(辰阳);
+
+                this.辰 = 辰;
+                this.辰阳 = 辰阳;
+                this.辰阴 = 辰阴;
+            }
         }
-        public Guid 所用插件 { get; }
 
         public HeavenlyStem 日 { get; }
         public EarthlyBranch 日阳 { get; }

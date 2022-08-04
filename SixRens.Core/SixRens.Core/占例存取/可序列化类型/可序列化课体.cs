@@ -3,7 +3,7 @@ using SixRens.Core.壬式生成;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
-    internal sealed class 可序列化课体 : I课体内容
+    internal sealed class 可序列化课体
     {
         public 可序列化课体(课体 课体)
         {
@@ -17,7 +17,7 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 课体 转课体()
         {
-            return new 课体(this.插件, this.课体名 ?? string.Empty, this);
+            return new 课体(this.插件, this.课体名 ?? string.Empty, this.属此课体);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace SixRens.Core.名称转换
 
         public string this[T key] { get => ((IDictionary<T, string>)this.字典)[key]; set => ((IDictionary<T, string>)this.字典)[key] = value; }
 
-        public ICollection<T> Keys => ((IDictionary<T, string>)this.字典).Keys;
+        ICollection<T> IDictionary<T, string>.Keys => ((IDictionary<T, string>)this.字典).Keys;
 
         ICollection<string> IDictionary<T, string>.Values => ((IDictionary<T, string>)this.字典).Values;
 
@@ -17,7 +17,7 @@ namespace SixRens.Core.名称转换
 
         bool ICollection<KeyValuePair<T, string>>.IsReadOnly => ((ICollection<KeyValuePair<T, string>>)this.字典).IsReadOnly;
 
-        public void Add(T key, string value)
+        void IDictionary<T, string>.Add(T key, string value)
         {
             ((IDictionary<T, string>)this.字典).Add(key, value);
         }
@@ -37,7 +37,7 @@ namespace SixRens.Core.名称转换
             return ((ICollection<KeyValuePair<T, string>>)this.字典).Contains(item);
         }
 
-        public bool ContainsKey(T key)
+        bool IDictionary<T, string>.ContainsKey(T key)
         {
             return ((IDictionary<T, string>)this.字典).ContainsKey(key);
         }

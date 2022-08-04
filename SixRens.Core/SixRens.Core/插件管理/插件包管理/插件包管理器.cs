@@ -14,23 +14,11 @@ namespace SixRens.Core.插件管理.插件包管理
         private readonly List<插件包> _插件包;
         public IReadOnlyList<插件包> 插件包 { get; }
 
-        private readonly Dictionary<Guid, 插件和所属插件包<I地盘插件>> _地盘插件;
-        public IReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>> 地盘插件 { get; }
-
-        private readonly Dictionary<Guid, 插件和所属插件包<I天盘插件>> _天盘插件;
-        public IReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>> 天盘插件 { get; }
-
-        private readonly Dictionary<Guid, 插件和所属插件包<I四课插件>> _四课插件;
-        public IReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>> 四课插件 { get; }
-
         private readonly Dictionary<Guid, 插件和所属插件包<I三传插件>> _三传插件;
         public IReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>> 三传插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I天将插件>> _天将插件;
         public IReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>> 天将插件 { get; }
-
-        private readonly Dictionary<Guid, 插件和所属插件包<I年命插件>> _年命插件;
-        public IReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>> 年命插件 { get; }
 
         private readonly Dictionary<Guid, 插件和所属插件包<I神煞插件>> _神煞插件;
         public IReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>> 神煞插件 { get; }
@@ -47,18 +35,10 @@ namespace SixRens.Core.插件管理.插件包管理
             this._插件包 = new();
             this.插件包 = new ReadOnlyCollection<插件包>(this._插件包);
 
-            this._地盘插件 = new();
-            this.地盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I地盘插件>>(this._地盘插件);
-            this._天盘插件 = new();
-            this.天盘插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天盘插件>>(this._天盘插件);
-            this._四课插件 = new();
-            this.四课插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I四课插件>>(this._四课插件);
             this._三传插件 = new();
             this.三传插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I三传插件>>(this._三传插件);
             this._天将插件 = new();
             this.天将插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I天将插件>>(this._天将插件);
-            this._年命插件 = new();
-            this.年命插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I年命插件>>(this._年命插件);
             this._神煞插件 = new();
             this.神煞插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I神煞插件>>(this._神煞插件);
             this._课体插件 = new();
@@ -71,18 +51,6 @@ namespace SixRens.Core.插件管理.插件包管理
                 插件包 包 = new 插件包(插件包文件, 插件包识别码);
                 try
                 {
-                    foreach (var 插件 in 包.地盘插件)
-                    {
-                        this._地盘插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.天盘插件)
-                    {
-                        this._天盘插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.四课插件)
-                    {
-                        this._四课插件.Add(插件.插件识别码, new(插件, 包));
-                    }
                     foreach (var 插件 in 包.三传插件)
                     {
                         this._三传插件.Add(插件.插件识别码, new(插件, 包));
@@ -90,10 +58,6 @@ namespace SixRens.Core.插件管理.插件包管理
                     foreach (var 插件 in 包.天将插件)
                     {
                         this._天将插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.年命插件)
-                    {
-                        this._年命插件.Add(插件.插件识别码, new(插件, 包));
                     }
                     foreach (var 插件 in 包.神煞插件)
                     {
@@ -128,30 +92,6 @@ namespace SixRens.Core.插件管理.插件包管理
             var 包本地识别码 = this._储存器.生成新的插件包文件名();
             插件包 包 = new 插件包(插件包流复制, 包本地识别码);
 
-            foreach (var 插件 in 包.地盘插件)
-            {
-                if (this._地盘插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.天盘插件)
-            {
-                if (this._天盘插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.四课插件)
-            {
-                if (this._四课插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
             foreach (var 插件 in 包.三传插件)
             {
                 if (this._三传插件.ContainsKey(插件.插件识别码))
@@ -163,14 +103,6 @@ namespace SixRens.Core.插件管理.插件包管理
             foreach (var 插件 in 包.天将插件)
             {
                 if (this._天将插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.年命插件)
-            {
-                if (this._年命插件.ContainsKey(插件.插件识别码))
                 {
                     包.插件包上下文.Unload();
                     return null;
@@ -205,18 +137,6 @@ namespace SixRens.Core.插件管理.插件包管理
             {
                 插件包流复制.Position = 0;
                 this._储存器.储存插件包文件(包本地识别码, 插件包流复制);
-                foreach (var 插件 in 包.地盘插件)
-                {
-                    this._地盘插件.Add(插件.插件识别码, new(插件, 包));
-                }
-                foreach (var 插件 in 包.天盘插件)
-                {
-                    this._天盘插件.Add(插件.插件识别码, new(插件, 包));
-                }
-                foreach (var 插件 in 包.四课插件)
-                {
-                    this._四课插件.Add(插件.插件识别码, new(插件, 包));
-                }
                 foreach (var 插件 in 包.三传插件)
                 {
                     this._三传插件.Add(插件.插件识别码, new(插件, 包));
@@ -224,10 +144,6 @@ namespace SixRens.Core.插件管理.插件包管理
                 foreach (var 插件 in 包.天将插件)
                 {
                     this._天将插件.Add(插件.插件识别码, new(插件, 包));
-                }
-                foreach (var 插件 in 包.年命插件)
-                {
-                    this._年命插件.Add(插件.插件识别码, new(插件, 包));
                 }
                 foreach (var 插件 in 包.神煞插件)
                 {
@@ -261,18 +177,6 @@ namespace SixRens.Core.插件管理.插件包管理
             if (this._插件包.Remove(包))
             {
                 this._储存器.移除插件包文件(包.本地识别码);
-                foreach (var 插件 in 包.地盘插件)
-                {
-                    _ = this._地盘插件.Remove(插件.插件识别码);
-                }
-                foreach (var 插件 in 包.天盘插件)
-                {
-                    _ = this._天盘插件.Remove(插件.插件识别码);
-                }
-                foreach (var 插件 in 包.四课插件)
-                {
-                    _ = this._四课插件.Remove(插件.插件识别码);
-                }
                 foreach (var 插件 in 包.三传插件)
                 {
                     _ = this._三传插件.Remove(插件.插件识别码);
@@ -280,10 +184,6 @@ namespace SixRens.Core.插件管理.插件包管理
                 foreach (var 插件 in 包.天将插件)
                 {
                     _ = this._天将插件.Remove(插件.插件识别码);
-                }
-                foreach (var 插件 in 包.年命插件)
-                {
-                    _ = this._年命插件.Remove(插件.插件识别码);
                 }
                 foreach (var 插件 in 包.神煞插件)
                 {
@@ -342,12 +242,8 @@ namespace SixRens.Core.插件管理.插件包管理
 
         public 经过解析的预设? 解析预设(预设 预设)
         {
-            if (!找出插件(预设.地盘插件, this._地盘插件, out var 地盘插件) ||
-                !找出插件(预设.天盘插件, this._天盘插件, out var 天盘插件) ||
-                !找出插件(预设.四课插件, this._四课插件, out var 四课插件) ||
-                !找出插件(预设.三传插件, this._三传插件, out var 三传插件) ||
+            if (!找出插件(预设.三传插件, this._三传插件, out var 三传插件) ||
                 !找出插件(预设.天将插件, this._天将插件, out var 天将插件) ||
-                !找出插件(预设.年命插件, this._年命插件, out var 年命插件) ||
                 !找出插件(预设.神煞插件, this._神煞插件, out var 神煞插件) ||
                 !找出插件(预设.课体插件, this._课体插件, out var 课体插件) ||
                 !找出插件(预设.参考插件, this._参考插件, out var 参考插件))
@@ -365,9 +261,9 @@ namespace SixRens.Core.插件管理.插件包管理
             bool 存在同时指定了启用和禁用的神煞 = false;
             foreach (var 插件 in 神煞插件)
             {
-                foreach (var 神煞名 in 插件.支持的神煞)
+                foreach (var 神煞名 in 插件.支持神煞的名称)
                 {
-                    var 神煞 = new 实体题目和所属插件识别码(神煞名.神煞名, 插件.插件识别码);
+                    var 神煞 = new 实体题目和所属插件识别码(神煞名, 插件.插件识别码);
                     if (神煞禁用.Contains(神煞))
                     {
                         if (神煞启用.Remove(神煞))
@@ -403,7 +299,7 @@ namespace SixRens.Core.插件管理.插件包管理
             {
                 foreach (var 课体名 in 插件.支持的课体)
                 {
-                    var 课体 = new 实体题目和所属插件识别码(课体名.课体名, 插件.插件识别码);
+                    var 课体 = new 实体题目和所属插件识别码(课体名, 插件.插件识别码);
                     if (课体禁用.Contains(课体))
                     {
                         if (课体启用.Remove(课体))
@@ -425,12 +321,8 @@ namespace SixRens.Core.插件管理.插件包管理
             bool 存在指定启用但未找到的课体 = 神煞启用.Count > 0;
 
             return new(
-                地盘插件,
-                天盘插件,
-                四课插件,
                 三传插件,
                 天将插件,
-                年命插件,
                 显式指定启用的神煞.Select(神煞 => 神煞.Value).Concat(未显式指定的神煞),
                 存在未显式指定的神煞,
                 存在指定启用但未找到的神煞,

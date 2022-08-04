@@ -5,7 +5,7 @@ using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
-    internal sealed class 可序列化天将盘 : I天将盘
+    internal sealed class 可序列化天将盘 : I去冗天将盘
     {
         public 可序列化天将盘(天将盘 天将盘)
         {
@@ -19,7 +19,7 @@ namespace SixRens.Core.占例存取.可序列化类型
         public Guid 插件 { get; init; }
         public int[]? 表 { get; init; }
 
-        天将 I天将盘.取乘将(EarthlyBranch 天神)
+        天将 I去冗天将盘.取乘将(EarthlyBranch 天神)
         {
             if (this.表 is null)
                 return (天将)0;
@@ -29,9 +29,9 @@ namespace SixRens.Core.占例存取.可序列化类型
             return (天将)this.表[index];
         }
 
-        public 天将盘 转天将盘()
+        public 去冗天将盘 转天将盘()
         {
-            return new 天将盘(this.插件, this);
+            return new 去冗天将盘(this.插件, this);
         }
     }
 }

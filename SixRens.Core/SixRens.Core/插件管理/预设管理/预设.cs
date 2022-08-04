@@ -6,39 +6,6 @@ namespace SixRens.Core.插件管理.预设管理
     {
         public event EventHandler? 预设被修改;
 
-        private Guid? _地盘插件;
-        public Guid? 地盘插件
-        {
-            get { return this._地盘插件; }
-            set
-            {
-                this._地盘插件 = value;
-                预设被修改?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        private Guid? _天盘插件;
-        public Guid? 天盘插件
-        {
-            get { return this._天盘插件; }
-            set
-            {
-                this._天盘插件 = value;
-                预设被修改?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        private Guid? _四课插件;
-        public Guid? 四课插件
-        {
-            get { return this._四课插件; }
-            set
-            {
-                this._四课插件 = value;
-                预设被修改?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
         private Guid? _三传插件;
         public Guid? 三传插件
         {
@@ -61,18 +28,6 @@ namespace SixRens.Core.插件管理.预设管理
             }
         }
 
-        private Guid? _年命插件;
-        public Guid? 年命插件
-        {
-            get { return this._年命插件; }
-            set
-            {
-                this._年命插件 = value;
-                预设被修改?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-
         public I可批量操作列表<Guid> 神煞插件 { get; }
         public I可批量操作列表<Guid> 课体插件 { get; }
         public I可批量操作列表<Guid> 参考插件 { get; }
@@ -90,12 +45,8 @@ namespace SixRens.Core.插件管理.预设管理
 
             信息 = 信息 ?? new();
 
-            this._地盘插件 = 信息.地盘插件;
-            this._天盘插件 = 信息.天盘插件;
-            this._四课插件 = 信息.四课插件;
             this._三传插件 = 信息.三传插件;
             this._天将插件 = 信息.天将插件;
-            this._年命插件 = 信息.年命插件;
 
             this.神煞插件 = new 绑定列表<Guid>(this, 信息.神煞插件);
             this.课体插件 = new 绑定列表<Guid>(this, 信息.课体插件);
@@ -111,12 +62,8 @@ namespace SixRens.Core.插件管理.预设管理
         internal string 序列化()
         {
             var 可序列化 = new 可序列化信息() {
-                地盘插件 = this.地盘插件,
-                天盘插件 = this.天盘插件,
-                四课插件 = this.四课插件,
                 三传插件 = this.三传插件,
                 天将插件 = this.天将插件,
-                年命插件 = this.年命插件,
                 神煞插件 = new(this.神煞插件),
                 课体插件 = new(this.课体插件),
                 参考插件 = new(this.参考插件),

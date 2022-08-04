@@ -1,6 +1,7 @@
 ﻿using SixRens.Api;
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
+using SixRens.Api.实体.起课信息;
 using YiJingFramework.StemsAndBranches;
 
 namespace 测试用插件包.插件
@@ -17,7 +18,7 @@ namespace 测试用插件包.插件
 
         public EarthlyBranch 末传 => new(2);
 
-        public I三传 获取三传(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课)
+        public I三传 获取三传(I起课信息 起课信息, I天地盘 天地盘, I四课 四课)
         {
             return this;
         }

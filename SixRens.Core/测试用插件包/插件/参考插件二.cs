@@ -1,6 +1,8 @@
 ﻿using SixRens.Api;
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
+using SixRens.Api.实体.起课信息;
+using YiJingFramework.StemsAndBranches;
 
 namespace 测试用插件包.插件
 {
@@ -12,21 +14,15 @@ namespace 测试用插件包.插件
 
         private sealed record 参考(
             string 题目,
-            string? 内容) : I占断参考题目, I占断参考内容
+            string 内容,
+            EarthlyBranch? 相关宫位) : I占断参考
         { }
 
-        private static readonly 参考[] 参考表 = new[]
+        public IEnumerable<I占断参考> 生成占断参考(I起课信息 起课信息, I天地盘 天盘, I四课 四课, I三传 三传, I天将盘 天将盘, IReadOnlyList<I神煞> 神煞列表, IReadOnlyList<I课体> 课体列表)
         {
-            new 参考("二个参考", "二个参考"),
-            new 参考("回声参考", "回声参考"),
-            new 参考("没有参考", null),
-        };
-
-        public IEnumerable<I占断参考题目> 支持的占断参考 => 参考表;
-
-        public I占断参考内容 生成占断参考(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传, I天将盘 天将盘, I年命? 课主年命, IReadOnlyList<I年命> 对象年命, IReadOnlyList<I神煞> 神煞列表, IReadOnlyList<I课体> 课体列表, string 占断参考题目)
-        {
-            return 参考表.Where(s => s.题目 == 占断参考题目).Single();
+            yield return new 参考("二个参考", "全课的参考二", null);
+            yield return new 参考("二个参考", "丑宫的参考二", new(2));
+            yield return new 参考("统一参考", "统一的参考二", null);
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿using SixRens.Api;
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
+using SixRens.Api.实体.起课信息;
 using YiJingFramework.StemsAndBranches;
+using static SixRens.Api.I神煞插件;
 
 namespace 测试用插件包.插件
 {
-    public class 神煞插件二 : I神煞插件
+    public class 神煞插件二 : I神煞插件, I神煞内容提供器
     {
         public string? 插件名 => "测试用神煞二（寅卯）";
 
@@ -22,11 +24,16 @@ namespace 测试用插件包.插件
             new 神煞("作寅", new[] { new EarthlyBranch(3) }),
             new 神煞("作卯", new[] { new EarthlyBranch(4) }),
         };
-        public IEnumerable<I神煞题目> 支持的神煞 => 神煞表;
+        public IEnumerable<string> 支持神煞的名称 => 神煞表.Select(t => t.神煞名);
 
-        public I神煞内容 获取神煞(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传, I天将盘 天将盘, I年命? 课主年命, IReadOnlyList<I年命> 对象年命, string 神煞题目)
+        public IEnumerable<EarthlyBranch> 取所在神(string 神煞名)
         {
-            return 神煞表.Where(s => s.神煞名 == 神煞题目).Single();
+            return 神煞表.Where(s => s.神煞名 == 神煞名).Single().所在神;
+        }
+
+        public I神煞内容提供器 获取神煞内容提供器(I起课信息 起课信息, I天地盘 天地盘, I四课 四课, I三传 三传, I天将盘 天将盘)
+        {
+            return this;
         }
     }
 }

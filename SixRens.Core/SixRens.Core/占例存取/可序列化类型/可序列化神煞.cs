@@ -5,7 +5,7 @@ using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.占例存取.可序列化类型
 {
-    internal sealed class 可序列化神煞 : I神煞内容
+    internal sealed class 可序列化神煞
     {
         public 可序列化神煞(神煞 神煞)
         {
@@ -18,13 +18,12 @@ namespace SixRens.Core.占例存取.可序列化类型
         public string? 神煞名 { get; init; }
         public int[]? 所在神 { get; init; }
 
-        [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
-        IEnumerable<EarthlyBranch> I神煞内容.所在神
-            => (this.所在神 ?? Array.Empty<int>()).Select(i => new EarthlyBranch(i)).ToArray();
-
         public 神煞 转神煞()
         {
-            return new 神煞(this.插件, this.神煞名 ?? string.Empty, this);
+            return new 神煞(
+                this.插件,
+                this.神煞名 ?? string.Empty,
+                (this.所在神 ?? Array.Empty<int>()).Select(i => new EarthlyBranch(i)));
         }
     }
 }

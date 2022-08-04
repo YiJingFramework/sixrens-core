@@ -129,8 +129,8 @@ namespace 测试用交互
             if (this.comboBox4.SelectedIndex is not 0)
                 年月日时 = 年月日时.修改信息(null, this.comboBox4.SelectedItem is "昼占");
 
-            本命信息? 课主 = null;
-            List<本命信息> 对象 = new();
+            年命? 课主 = null;
+            List<年命> 对象 = new();
             foreach (var 本命 in this.本命绑定)
             {
                 if (本命.课主 is 本命项目.课主项.课主)
@@ -140,15 +140,15 @@ namespace 测试用交互
                         _ = MessageBox.Show("只能有一个课主");
                         return;
                     }
-                    课主 = new 本命信息(
+                    课主 = new 年命(
                         本命.性别 is 本命项目.性别项.男 ? YinYang.Yang : YinYang.Yin,
-                        this.地支表[本命.本命.ToString()[0]]);
+                        this.地支表[本命.本命.ToString()[0]], 年月日时);
                 }
                 else
                 {
-                    对象.Add(new 本命信息(
+                    对象.Add(new 年命(
                         本命.性别 is 本命项目.性别项.男 ? YinYang.Yang : YinYang.Yin,
-                        this.地支表[本命.本命.ToString()[0]]));
+                        this.地支表[本命.本命.ToString()[0]], 年月日时));
                 }
             }
 
@@ -172,7 +172,7 @@ namespace 测试用交互
             if (预设.存在未显式指定的课体)
                 _ = MessageBox.Show("存在未显式指定的课体，这些课体会视为启用。");
 
-            this.所起壬式 = new 壬式(年月日时, 课主, 对象, 预设).创建占例();
+            this.所起壬式 = new 壬式(new(年月日时, 课主, 对象), 预设).创建占例();
             if(年月日时 is 真实年月日时 真实)
                 this.所起壬式.西历时间 = 真实.西历日期对象;
             this.DialogResult = DialogResult.OK;

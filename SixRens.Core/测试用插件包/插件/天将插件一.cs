@@ -1,11 +1,12 @@
 ﻿using SixRens.Api;
 using SixRens.Api.实体;
 using SixRens.Api.实体.壬式;
+using SixRens.Api.实体.起课信息;
 using YiJingFramework.StemsAndBranches;
 
 namespace 测试用插件包.插件
 {
-    public class 天将插件一 : I天将插件, I天将盘
+    public class 天将插件一 : I天将插件, I去冗天将盘
     {
         public string? 插件名 => "测试用天将一（直转）";
 
@@ -16,7 +17,7 @@ namespace 测试用插件包.插件
             return (天将)天神.Index;
         }
 
-        public I天将盘 获取天将盘(Guid 壬式识别码, I年月日时 年月日时, I地盘 地盘, I天盘 天盘, I四课 四课, I三传 三传)
+        public I去冗天将盘 获取天将盘(I起课信息 起课信息, I天地盘 天地盘, I四课 四课, I三传 三传)
         {
             return this;
         }

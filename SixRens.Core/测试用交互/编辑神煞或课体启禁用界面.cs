@@ -51,13 +51,13 @@ namespace 测试用交互
                     var 识别码 = 插件.插件.插件识别码;
                     if (欲找.Remove(识别码))
                     {
-                        foreach (var 项目 in 插件.插件.支持的神煞)
+                        foreach (var 神煞名 in 插件.插件.支持神煞的名称)
                         {
-                            if (this.绑定列表启用.Any(i => i.插件 == 识别码 && i.名称 == 项目.神煞名))
+                            if (this.绑定列表启用.Any(i => i.插件 == 识别码 && i.名称 == 神煞名))
                                 continue;
-                            if (this.绑定列表禁用.Any(i => i.插件 == 识别码 && i.名称 == 项目.神煞名))
+                            if (this.绑定列表禁用.Any(i => i.插件 == 识别码 && i.名称 == 神煞名))
                                 continue;
-                            this.绑定列表启用.Add(new(项目.神煞名, 识别码));
+                            this.绑定列表启用.Add(new(神煞名, 识别码));
                         }
                     }
                 }
@@ -72,11 +72,11 @@ namespace 测试用交互
                     {
                         foreach (var 项目 in 插件.插件.支持的课体)
                         {
-                            if (this.绑定列表启用.Any(i => i.插件 == 识别码 && i.名称 == 项目.课体名))
+                            if (this.绑定列表启用.Any(i => i.插件 == 识别码 && i.名称 == 项目))
                                 continue;
-                            if (this.绑定列表禁用.Any(i => i.插件 == 识别码 && i.名称 == 项目.课体名))
+                            if (this.绑定列表禁用.Any(i => i.插件 == 识别码 && i.名称 == 项目))
                                 continue;
-                            this.绑定列表启用.Add(new(项目.课体名, 识别码));
+                            this.绑定列表启用.Add(new(项目, 识别码));
                         }
                     }
                 }
