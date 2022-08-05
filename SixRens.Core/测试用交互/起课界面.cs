@@ -1,4 +1,5 @@
-﻿using SixRens.Core.占例存取;
+﻿using SixRens.Api.实体;
+using SixRens.Core.占例存取;
 using SixRens.Core.壬式生成;
 using SixRens.Core.年月日时;
 using SixRens.Core.插件管理.插件包管理;
@@ -141,13 +142,13 @@ namespace 测试用交互
                         return;
                     }
                     课主 = new 年命(
-                        本命.性别 is 本命项目.性别项.男 ? YinYang.Yang : YinYang.Yin,
+                        本命.性别 is 本命项目.性别项.男 ? 性别.男 : 性别.女,
                         this.地支表[本命.本命.ToString()[0]], 年月日时);
                 }
                 else
                 {
                     对象.Add(new 年命(
-                        本命.性别 is 本命项目.性别项.男 ? YinYang.Yang : YinYang.Yin,
+                        本命.性别 is 本命项目.性别项.男 ? 性别.男 : 性别.女,
                         this.地支表[本命.本命.ToString()[0]], 年月日时));
                 }
             }

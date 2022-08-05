@@ -11,7 +11,7 @@ namespace SixRens.Core.占例存取.可序列化类型
     {
         public 可序列化年命(年命 年命)
         {
-            this.性别 = 年命.性别.IsYang;
+            this.性别 = 年命.性别.为男性;
             this.本命 = 年命.本命.Index;
             this.行年 = 年命.行年.Index;
         }

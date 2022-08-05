@@ -8,7 +8,7 @@
     <Company>YiJingFramework</Company>
     <Product>SixRens.Core</Product>
     <PackageId>SixRens.Core</PackageId>
-    <Version>1.15.2</Version>
+    <Version>1.15.3</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/YiJingFramework/sixrens-core.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -18,7 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="lunar-csharp" Version="1.2.19" />
-    <PackageReference Include="SixRens.Api" Version="1.16.0" />
+    <PackageReference Include="SixRens.Api" Version="1.17.1" />
+    <PackageReference Include="SixRens.Tools" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

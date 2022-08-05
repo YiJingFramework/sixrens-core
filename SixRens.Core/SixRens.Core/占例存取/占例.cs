@@ -1,9 +1,9 @@
 ﻿using SixRens.Api.实体;
 using SixRens.Api.实体.起课信息;
-using SixRens.Api.工具;
 using SixRens.Core.占例存取.可序列化类型;
 using SixRens.Core.名称转换;
 using SixRens.Core.壬式生成;
+using SixRens.Tools;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
@@ -58,7 +58,7 @@ namespace SixRens.Core.占例存取
         {
             string 转字符串(I年命 年命)
             {
-                return $"{年命.本命:C}命{年命.行年:C}年{(年命.性别.IsYang ? '男' : '女')}";
+                return $"{年命.本命:C}命{年命.行年:C}年{年命.性别}";
             }
 
             bool 有内容 = false;

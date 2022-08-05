@@ -1,5 +1,5 @@
 ﻿using SixRens.Api;
-using SixRens.Api.工具;
+using SixRens.Api.扩展;
 using System.IO.Compression;
 using System.Reflection;
 using 测试用插件包;
