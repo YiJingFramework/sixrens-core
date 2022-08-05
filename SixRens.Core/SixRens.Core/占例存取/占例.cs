@@ -4,6 +4,7 @@ using SixRens.Api.工具;
 using SixRens.Core.占例存取.可序列化类型;
 using SixRens.Core.名称转换;
 using SixRens.Core.壬式生成;
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using YiJingFramework.StemsAndBranches;
@@ -156,7 +157,10 @@ namespace SixRens.Core.占例存取
 
         private void 追加课体(StringBuilder builder)
         {
-            var t = this.壬式.课体.Select(体 => 体.课体名).ToArray();
+            var t = this.壬式.课体
+                .Where(体 => 体.属此课体)
+                .Select(体 => 体.课体名)
+                .ToArray();
             if (t.Length > 0)
             {
                 _ = builder
@@ -183,15 +187,36 @@ namespace SixRens.Core.占例存取
 
         private void 追加参考(StringBuilder builder)
         {
-            foreach (var 参考 in this.壬式.占断参考)
-            {
-                if (参考.内容 is null)
-                    continue;
+            var 参考列表 = this.壬式.占断参考
+                .GroupBy(参考 => 参考.相关宫位)
+                .ToDictionary(参考组 => 参考组.Key?.Index ?? 0);
 
-                _ = builder
-                    .AppendLine($"{参考.题目}：")
-                    .AppendLine(参考.内容)
-                    .AppendLine();
+            for(int 序号 = 1; 序号 < 12; 序号++)
+            {
+                if (参考列表.TryGetValue(序号, out var 参考组))
+                {
+                    Debug.Assert(参考组.Key.HasValue);
+                    foreach (var 参考 in this.壬式.占断参考)
+                    {
+                        _ = builder
+                            .AppendLine($"【{参考组.Key.Value:C}位】{参考.题目}：")
+                            .AppendLine(参考.内容)
+                            .AppendLine();
+                    }
+                }
+            }
+
+            {
+                if (参考列表.TryGetValue(0, out var 参考组))
+                {
+                    foreach (var 参考 in this.壬式.占断参考)
+                    {
+                        _ = builder
+                            .AppendLine($"【全课】{参考.题目}：")
+                            .AppendLine(参考.内容)
+                            .AppendLine();
+                    }
+                }
             }
         }
 
