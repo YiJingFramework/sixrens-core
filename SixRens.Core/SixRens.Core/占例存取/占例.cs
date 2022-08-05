@@ -188,18 +188,18 @@ namespace SixRens.Core.占例存取
         private void 追加参考(StringBuilder builder)
         {
             var 参考列表 = this.壬式.占断参考
-                .GroupBy(参考 => 参考.相关宫位)
-                .ToDictionary(参考组 => 参考组.Key?.Index ?? 0);
+                .GroupBy(参考 => 参考.相关宫位?.Index ?? 0)
+                .ToDictionary(参考组 => 参考组.Key);
 
-            for(int 序号 = 1; 序号 < 12; 序号++)
+            for(int 序号 = 1; 序号 <= 12; 序号++)
             {
                 if (参考列表.TryGetValue(序号, out var 参考组))
                 {
-                    Debug.Assert(参考组.Key.HasValue);
-                    foreach (var 参考 in this.壬式.占断参考)
+                    var 宫 = new EarthlyBranch(参考组.Key);
+                    foreach (var 参考 in 参考组)
                     {
                         _ = builder
-                            .AppendLine($"【{参考组.Key.Value:C}位】{参考.题目}：")
+                            .AppendLine($"【{宫:C}位】{参考.题目}：")
                             .AppendLine(参考.内容)
                             .AppendLine();
                     }
@@ -209,7 +209,7 @@ namespace SixRens.Core.占例存取
             {
                 if (参考列表.TryGetValue(0, out var 参考组))
                 {
-                    foreach (var 参考 in this.壬式.占断参考)
+                    foreach (var 参考 in 参考组)
                     {
                         _ = builder
                             .AppendLine($"【全课】{参考.题目}：")
