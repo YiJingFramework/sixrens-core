@@ -1,6 +1,7 @@
 ﻿using SixRens.Api.实体.壬式;
 using SixRens.Api.实体.起课信息;
 using SixRens.Tools;
+using SixRens.Tools.十二长生扩展;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.壬式生成

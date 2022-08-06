@@ -1,4 +1,5 @@
 ﻿using SixRens.Tools;
+using SixRens.Tools.干支性质扩展;
 using YiJingFramework.StemsAndBranches;
 
 namespace SixRens.Core.年月日时

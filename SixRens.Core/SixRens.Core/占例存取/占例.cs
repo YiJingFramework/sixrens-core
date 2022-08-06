@@ -4,6 +4,7 @@ using SixRens.Core.占例存取.可序列化类型;
 using SixRens.Core.名称转换;
 using SixRens.Core.壬式生成;
 using SixRens.Tools;
+using SixRens.Tools.六亲扩展;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;

@@ -24,7 +24,7 @@ namespace SixRens.Core.壬式生成
         internal 壬式(
             起课参数 起课参数,
             三传 三传, 
-            去冗天将盘 天将盘,
+            天将盘 天将盘,
             IEnumerable<神煞> 神煞,
             IEnumerable<课体> 课体,
             IEnumerable<占断参考> 占断参考)
@@ -33,7 +33,7 @@ namespace SixRens.Core.壬式生成
             this.天地盘 = new(起课参数.年月日时);
             this.四课 = new(起课参数.年月日时, this.天地盘);
             this.三传 = 三传;
-            this.天将盘 = new(天将盘.所用插件, 天地盘, 天将盘);
+            this.天将盘 = 天将盘;
             this.神煞 = Array.AsReadOnly(神煞.ToArray());
             this.课体 = Array.AsReadOnly(课体.ToArray());
             this.占断参考 = Array.AsReadOnly(占断参考.ToArray());
@@ -60,7 +60,7 @@ namespace SixRens.Core.壬式生成
 
             {
                 var 天将盘 = 预设.天将插件.获取天将盘(this.起课参数, this.天地盘, this.四课, this.三传);
-                this.天将盘 = new 天将盘(预设.天将插件.插件识别码, this.天地盘, 天将盘);
+                this.天将盘 = new 天将盘(预设.天将插件.插件识别码, 天将盘);
             }
 
             {
