@@ -17,8 +17,8 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 可序列化占断参考() { }
         public Guid 插件 { get; init; }
+        public EarthlyBranch? 相关宫位 { get; init; }
         public string? 题目 { get; init; }
-        public EarthlyBranch? 相关宫位 { get; set; }
         public string? 内容 { get; init; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]

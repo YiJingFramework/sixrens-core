@@ -9,6 +9,7 @@ namespace SixRens.Core.占例存取.可序列化类型
         {
             this.插件 = 课体.所用插件;
             this.课体名 = 课体.课体名;
+            this.属此课体 = 课体.属此课体;
         }
         public 可序列化课体() { }
         public Guid 插件 { get; init; }

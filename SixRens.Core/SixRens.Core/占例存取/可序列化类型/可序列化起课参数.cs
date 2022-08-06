@@ -13,9 +13,9 @@ namespace SixRens.Core.占例存取.可序列化类型
 
         public 可序列化起课参数() { }
 
-        public 可序列化年月日时? 年月日时 { get; set; }
-        public 可序列化年命? 课主年命 { get; set; }
-        public 可序列化年命[]? 对象年命 { get; set; }
+        public 可序列化年月日时? 年月日时 { get; init; }
+        public 可序列化年命? 课主年命 { get; init; }
+        public 可序列化年命[]? 对象年命 { get; init; }
 
         public 起课参数 转起课信息()
         {
