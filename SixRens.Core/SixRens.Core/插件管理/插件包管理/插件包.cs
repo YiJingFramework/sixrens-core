@@ -21,7 +21,11 @@ namespace SixRens.Core.插件管理.插件包管理
         public string 名称 { get; }
         public string 版本号 { get; }
         public string? 网址 { get; }
-        public string 本地识别码 { get; }
+
+        /// <summary>
+        /// 为了能够先加载插件包，随后再根据保存结果生成识别码，故设置为 internal set ，不应该在其他位置修改它。
+        /// </summary>
+        public string 本地识别码 { get; internal set; }
 
         public IReadOnlyList<I三传插件> 三传插件 { get; }
         public IReadOnlyList<I天将插件> 天将插件 { get; }

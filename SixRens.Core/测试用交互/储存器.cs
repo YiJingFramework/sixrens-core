@@ -19,14 +19,7 @@ namespace 测试用交互
             this._文件夹.Create();
         }
 
-        public void 储存插件包文件(string 插件包名, Stream 插件包)
-        {
-            var file = this.从插件包名获取文件(插件包名);
-            using var f = file.Open(FileMode.Create);
-            插件包.CopyTo(f);
-        }
-
-        public string 生成新的插件包文件名()
+        private string 生成新的插件包文件名()
         {
             for (; ; )
             {
@@ -38,13 +31,22 @@ namespace 测试用交互
             }
         }
 
+        public string 储存插件包文件(Stream 插件包)
+        {
+            var name = 生成新的插件包文件名();
+            var file = this.从插件包名获取文件(name);
+            using var f = file.Open(FileMode.Create);
+            插件包.CopyTo(f);
+            return name;
+        }
+
         public void 移除插件包文件(string 插件包名)
         {
             var file = this.从插件包名获取文件(插件包名);
             file.Delete();
         }
 
-        public IEnumerable<(string 插件包文件名, Stream 插件包)> 获取所有插件包文件()
+        public IEnumerable<(string 插件包本地识别码, Stream 插件包)> 获取所有插件包文件()
         {
             return this._文件夹.EnumerateFiles()
                 .Where(file => file.Name.StartsWith("srspg_"))

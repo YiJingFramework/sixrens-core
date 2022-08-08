@@ -89,8 +89,7 @@ namespace SixRens.Core.插件管理.插件包管理
             var 插件包流复制 = new MemoryStream();
             插件包流.CopyTo(插件包流复制);
 
-            var 包本地识别码 = this._储存器.生成新的插件包文件名();
-            插件包 包 = new 插件包(插件包流复制, 包本地识别码);
+            插件包 包 = new 插件包(插件包流复制, "temp");
 
             foreach (var 插件 in 包.三传插件)
             {
@@ -136,7 +135,9 @@ namespace SixRens.Core.插件管理.插件包管理
             try
             {
                 插件包流复制.Position = 0;
-                this._储存器.储存插件包文件(包本地识别码, 插件包流复制);
+                var 包本地识别码 = this._储存器.储存插件包文件(插件包流复制);
+                包.本地识别码 = 包本地识别码;
+
                 foreach (var 插件 in 包.三传插件)
                 {
                     this._三传插件.Add(插件.插件识别码, new(插件, 包));
