@@ -16,7 +16,7 @@ namespace 测试用交互
             ApplicationConfiguration.Initialize();
 
             var 储存器 = new 储存器("储存");
-            var cjb = new 插件包管理器(储存器);
+            using var cjb = new 插件包管理器(储存器);
             var ys = new 预设管理器(储存器);
             Application.Run(new 主窗体(cjb, ys));
         }

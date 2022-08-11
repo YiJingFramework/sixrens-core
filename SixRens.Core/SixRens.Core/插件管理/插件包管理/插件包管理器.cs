@@ -1,6 +1,7 @@
 ﻿using SixRens.Api;
 using SixRens.Core.插件管理.预设管理;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using static SixRens.Core.插件管理.预设管理.经过解析的预设;
 using static SixRens.Core.插件管理.预设管理.预设;
@@ -8,7 +9,7 @@ using static SixRens.Core.插件管理.预设管理.预设.实体题目和所属
 
 namespace SixRens.Core.插件管理.插件包管理
 {
-    public class 插件包管理器
+    public sealed class 插件包管理器 : IDisposable
     {
         private readonly I插件包管理器储存器 _储存器;
         private readonly List<插件包> _插件包;
@@ -48,96 +49,9 @@ namespace SixRens.Core.插件管理.插件包管理
 
             foreach (var (插件包识别码, 插件包文件) in this._储存器.获取所有插件包文件())
             {
-                插件包 包 = new 插件包(插件包文件, 插件包识别码);
-                try
-                {
-                    foreach (var 插件 in 包.三传插件)
-                    {
-                        this._三传插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.天将插件)
-                    {
-                        this._天将插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.神煞插件)
-                    {
-                        this._神煞插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.课体插件)
-                    {
-                        this._课体插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                    foreach (var 插件 in 包.参考插件)
-                    {
-                        this._参考插件.Add(插件.插件识别码, new(插件, 包));
-                    }
-                }
-                catch
-                {
-                    包.插件包上下文.Unload();
-                    foreach (var 插件包 in this._插件包)
-                        插件包.插件包上下文.Unload();
-                    throw;
-                }
-                this._插件包.Add(包);
-            }
-        }
-
-        /// <returns>成功加载但有重复识别码时，将卸载之，并会返回 null 。</returns>
-        public 插件包? 从外部加载插件包(Stream 插件包流)
-        {
-            var 插件包流复制 = new MemoryStream();
-            插件包流.CopyTo(插件包流复制);
-
-            插件包 包 = new 插件包(插件包流复制, "temp");
-
-            foreach (var 插件 in 包.三传插件)
-            {
-                if (this._三传插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.天将插件)
-            {
-                if (this._天将插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.神煞插件)
-            {
-                if (this._神煞插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.课体插件)
-            {
-                if (this._课体插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-            foreach (var 插件 in 包.参考插件)
-            {
-                if (this._参考插件.ContainsKey(插件.插件识别码))
-                {
-                    包.插件包上下文.Unload();
-                    return null;
-                }
-            }
-
-            try
-            {
-                插件包流复制.Position = 0;
-                var 包本地识别码 = this._储存器.储存插件包文件(插件包流复制);
-                包.本地识别码 = 包本地识别码;
-
+                插件包 包 = new 插件包(插件包文件) {
+                    本地识别码 = 插件包识别码
+                };
                 foreach (var 插件 in 包.三传插件)
                 {
                     this._三传插件.Add(插件.插件识别码, new(插件, 包));
@@ -159,24 +73,82 @@ namespace SixRens.Core.插件管理.插件包管理
                     this._参考插件.Add(插件.插件识别码, new(插件, 包));
                 }
                 this._插件包.Add(包);
-                return 包;
             }
-            catch
+        }
+
+        public (插件包 包, bool 出现重复而未加入包用完当释放) 从外部加载插件包(Stream 插件包流)
+        {
+            var 插件包流复制 = new MemoryStream();
+            插件包流.CopyTo(插件包流复制);
+
+            插件包 包 = new 插件包(插件包流复制);
+
+            foreach (var 插件 in 包.三传插件)
             {
-                包.插件包上下文.Unload();
-                throw;
+                if (this._三传插件.ContainsKey(插件.插件识别码))
+                    return (包, true);
             }
+            foreach (var 插件 in 包.天将插件)
+            {
+                if (this._天将插件.ContainsKey(插件.插件识别码))
+                    return (包, true);
+            }
+            foreach (var 插件 in 包.神煞插件)
+            {
+                if (this._神煞插件.ContainsKey(插件.插件识别码))
+                    return (包, true);
+            }
+            foreach (var 插件 in 包.课体插件)
+            {
+                if (this._课体插件.ContainsKey(插件.插件识别码))
+                    return (包, true);
+            }
+            foreach (var 插件 in 包.参考插件)
+            {
+                if (this._参考插件.ContainsKey(插件.插件识别码))
+                    return (包, true);
+            }
+
+            插件包流复制.Position = 0;
+            var 包本地识别码 = this._储存器.储存插件包文件(插件包流复制);
+            包.本地识别码 = 包本地识别码;
+
+            foreach (var 插件 in 包.三传插件)
+            {
+                this._三传插件.Add(插件.插件识别码, new(插件, 包));
+            }
+            foreach (var 插件 in 包.天将插件)
+            {
+                this._天将插件.Add(插件.插件识别码, new(插件, 包));
+            }
+            foreach (var 插件 in 包.神煞插件)
+            {
+                this._神煞插件.Add(插件.插件识别码, new(插件, 包));
+            }
+            foreach (var 插件 in 包.课体插件)
+            {
+                this._课体插件.Add(插件.插件识别码, new(插件, 包));
+            }
+            foreach (var 插件 in 包.参考插件)
+            {
+                this._参考插件.Add(插件.插件识别码, new(插件, 包));
+            }
+            this._插件包.Add(包);
+            return (包, false);
         }
 
         public Stream? 导出插件包文件(插件包 包)
         {
+            if (包.本地识别码 is null)
+                return null;
             return this._储存器.获取插件包文件(包.本地识别码);
         }
 
-        public void 移除插件包(插件包 包, bool 卸载上下文 = true)
+        public void 移除插件包(插件包 包)
         {
             if (this._插件包.Remove(包))
             {
+                Debug.Assert(包.本地识别码 is not null);
                 this._储存器.移除插件包文件(包.本地识别码);
                 foreach (var 插件 in 包.三传插件)
                 {
@@ -198,9 +170,6 @@ namespace SixRens.Core.插件管理.插件包管理
                 {
                     _ = this._参考插件.Remove(插件.插件识别码);
                 }
-
-                if (卸载上下文)
-                    包.插件包上下文.Unload();
             }
         }
 
@@ -333,6 +302,12 @@ namespace SixRens.Core.插件管理.插件包管理
                 存在指定启用但未找到的课体,
                 存在同时指定了启用和禁用的课体,
                 参考插件);
+        }
+
+        public void Dispose()
+        {
+            foreach (var 包 in _插件包)
+                包.Dispose();
         }
     }
 }
