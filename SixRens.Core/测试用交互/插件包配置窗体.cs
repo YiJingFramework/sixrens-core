@@ -25,13 +25,13 @@ namespace 测试用交互
                 .ToArray());
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             var dia = new OpenFileDialog();
             if (dia.ShowDialog() is DialogResult.OK)
             {
                 using var file = dia.OpenFile();
-                var (b, c) = this.插件包管理器.从外部加载插件包(file);
+                var (b, c) = await this.插件包管理器.从外部加载插件包(file);
                 if (c)
                 {
                     using (b)
@@ -47,11 +47,11 @@ namespace 测试用交互
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem si in this.listView1.SelectedItems)
             {
-                this.插件包管理器.移除插件包((插件包)si.Tag);
+                await this.插件包管理器.移除插件包((插件包)si.Tag);
             }
             this.刷新列表();
         }

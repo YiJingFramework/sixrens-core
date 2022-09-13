@@ -31,33 +31,34 @@ namespace 测试用交互
             }
         }
 
-        public string 储存插件包文件(Stream 插件包)
+        public async ValueTask<string> 储存插件包文件(Stream 插件包)
         {
             var name = 生成新的插件包文件名();
             var file = this.从插件包名获取文件(name);
             using var f = file.Open(FileMode.Create);
-            插件包.CopyTo(f);
+            await 插件包.CopyToAsync(f);
             return name;
         }
 
-        public void 移除插件包文件(string 插件包名)
+        public ValueTask 移除插件包文件(string 插件包名)
         {
             var file = this.从插件包名获取文件(插件包名);
             file.Delete();
+            return ValueTask.CompletedTask;
         }
 
-        public IEnumerable<(string 插件包本地识别码, Stream 插件包)> 获取所有插件包文件()
+        public ValueTask<IEnumerable<(string 插件包本地识别码, Stream 插件包)>> 获取所有插件包文件()
         {
-            return this._文件夹.EnumerateFiles()
+            return ValueTask.FromResult(this._文件夹.EnumerateFiles()
                 .Where(file => file.Name.StartsWith("srspg_"))
                 .Select(file => (file.Name["srspg_".Length..],
-                (Stream)file.Open(FileMode.Open, FileAccess.Read)));
+                (Stream)file.Open(FileMode.Open, FileAccess.Read))));
         }
 
-        public Stream 获取插件包文件(string 插件包文件名)
+        public ValueTask<Stream?> 获取插件包文件(string 插件包文件名)
         {
             var file = 从插件包名获取文件(插件包文件名);
-            return file.OpenRead();
+            return ValueTask.FromResult((Stream?)file.OpenRead());
         }
 
         private FileInfo 从预设名获取文件(string 预设名)
@@ -66,33 +67,34 @@ namespace 测试用交互
             return new FileInfo(path);
         }
 
-        public IEnumerable<(string 预设名, string 内容)> 获取所有预设文件()
+        public ValueTask<IEnumerable<(string 预设名, string 内容)>> 获取所有预设文件()
         {
-            return this._文件夹.EnumerateFiles()
+            return ValueTask.FromResult(this._文件夹.EnumerateFiles()
                 .Where(file => file.Name.StartsWith("preset_"))
                 .Select(file => (file.Name["preset_".Length..],
-                File.ReadAllText(file.FullName)));
+                File.ReadAllText(file.FullName))));
         }
 
-        public bool 新建预设文件(string 预设名)
+        public async ValueTask<bool> 新建预设文件(string 预设名)
         {
             var file = this.从预设名获取文件(预设名);
             if (file.Exists)
                 return false;
-            File.WriteAllText(file.FullName, null);
+            await File.WriteAllTextAsync(file.FullName, null);
             return true;
         }
 
-        public void 储存预设文件(string 预设名, string 内容)
+        public async ValueTask 储存预设文件(string 预设名, string 内容)
         {
             var file = this.从预设名获取文件(预设名);
-            File.WriteAllText(file.FullName, 内容);
+            await File.WriteAllTextAsync(file.FullName, 内容);
         }
 
-        public void 移除预设文件(string 预设名)
+        public ValueTask 移除预设文件(string 预设名)
         {
             var file = this.从预设名获取文件(预设名);
             file.Delete();
+            return ValueTask.CompletedTask;
         }
     }
 }

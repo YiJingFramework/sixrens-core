@@ -32,9 +32,9 @@ namespace 测试用交互
                 .Select(y => new 列表项(y)).ToArray());
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            var 新预设 = this.预设管理器.新增预设(this.textBox1.Text);
+            var 新预设 = await this.预设管理器.新增预设(this.textBox1.Text);
             if (新预设 is null)
                 _ = MessageBox.Show("重名了！");
             else
@@ -47,10 +47,10 @@ namespace 测试用交互
                 _ = new 插件预设配置窗体(this.插件包管理器, s.预设).ShowDialog();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             foreach (列表项 s in this.listBox1.SelectedItems)
-                this.预设管理器.删除预设(s.预设);
+                await this.预设管理器.删除预设(s.预设);
             this.更新列表();
         }
     }

@@ -1,4 +1,5 @@
-﻿using SixRens.Api;
+﻿using Nito.AsyncEx;
+using SixRens.Api;
 using SixRens.Core.插件管理.预设管理;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -30,9 +31,18 @@ namespace SixRens.Core.插件管理.插件包管理
         private readonly Dictionary<Guid, 插件和所属插件包<I参考插件>> _参考插件;
         public IReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>> 参考插件 { get; }
 
-        public 插件包管理器(I插件包管理器储存器 插件包管理器储存器)
+        public static async ValueTask<插件包管理器> 创建插件包管理器(I插件包管理器储存器 插件包管理器储存器)
+        {
+            var result = new 插件包管理器(插件包管理器储存器);
+            await result.初始化();
+            return result;
+        }
+
+        private 插件包管理器(I插件包管理器储存器 插件包管理器储存器)
         {
             this._储存器 = 插件包管理器储存器;
+
+            this._信号量锁 = new(1);
             this._插件包 = new();
             this.插件包 = new ReadOnlyCollection<插件包>(this._插件包);
 
@@ -46,8 +56,14 @@ namespace SixRens.Core.插件管理.插件包管理
             this.课体插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I课体插件>>(this._课体插件);
             this._参考插件 = new();
             this.参考插件 = new ReadOnlyDictionary<Guid, 插件和所属插件包<I参考插件>>(this._参考插件);
+        }
 
-            foreach (var (插件包识别码, 插件包文件) in this._储存器.获取所有插件包文件())
+        private readonly SemaphoreSlim _信号量锁;
+
+        private async ValueTask 初始化()
+        {
+            using var 锁 = await _信号量锁.LockAsync();
+            foreach (var (插件包识别码, 插件包文件) in await this._储存器.获取所有插件包文件())
             {
                 插件包 包 = new 插件包(插件包文件) {
                     本地识别码 = 插件包识别码
@@ -74,15 +90,17 @@ namespace SixRens.Core.插件管理.插件包管理
                 }
                 this._插件包.Add(包);
             }
+            锁.Dispose(); // 我不确定 using 语句是否可能导致锁被提前释放。
         }
 
-        public (插件包 包, bool 出现重复而未加入包用完当释放) 从外部加载插件包(Stream 插件包流)
+        public async ValueTask<(插件包 包, bool 出现重复而未加入包用完当释放)> 从外部加载插件包(Stream 插件包流)
         {
             var 插件包流复制 = new MemoryStream();
             插件包流.CopyTo(插件包流复制);
 
             插件包 包 = new 插件包(插件包流复制);
 
+            using var 锁 = await _信号量锁.LockAsync();
             foreach (var 插件 in 包.三传插件)
             {
                 if (this._三传插件.ContainsKey(插件.插件识别码))
@@ -110,7 +128,7 @@ namespace SixRens.Core.插件管理.插件包管理
             }
 
             插件包流复制.Position = 0;
-            var 包本地识别码 = this._储存器.储存插件包文件(插件包流复制);
+            var 包本地识别码 = await this._储存器.储存插件包文件(插件包流复制);
             包.本地识别码 = 包本地识别码;
 
             foreach (var 插件 in 包.三传插件)
@@ -134,22 +152,24 @@ namespace SixRens.Core.插件管理.插件包管理
                 this._参考插件.Add(插件.插件识别码, new(插件, 包));
             }
             this._插件包.Add(包);
+            锁.Dispose(); // 我不确定 using 语句是否可能导致锁被提前释放。
             return (包, false);
         }
 
-        public Stream? 导出插件包文件(插件包 包)
+        public async ValueTask<Stream?> 导出插件包文件(插件包 包)
         {
             if (包.本地识别码 is null)
                 return null;
-            return this._储存器.获取插件包文件(包.本地识别码);
+            return await this._储存器.获取插件包文件(包.本地识别码);
         }
 
-        public void 移除插件包(插件包 包)
+        public async ValueTask 移除插件包(插件包 包)
         {
+            using var 锁 = await _信号量锁.LockAsync();
             if (this._插件包.Remove(包))
             {
                 Debug.Assert(包.本地识别码 is not null);
-                this._储存器.移除插件包文件(包.本地识别码);
+                await this._储存器.移除插件包文件(包.本地识别码);
                 foreach (var 插件 in 包.三传插件)
                 {
                     _ = this._三传插件.Remove(插件.插件识别码);
@@ -171,6 +191,7 @@ namespace SixRens.Core.插件管理.插件包管理
                     _ = this._参考插件.Remove(插件.插件识别码);
                 }
             }
+            锁.Dispose(); // 我不确定 using 语句是否可能导致锁被提前释放。
         }
 
         private static bool 找出插件<T插件>(
@@ -212,6 +233,7 @@ namespace SixRens.Core.插件管理.插件包管理
 
         public 经过解析的预设? 解析预设(预设 预设)
         {
+            using var 锁 = _信号量锁.Lock();
             if (!找出插件(预设.三传插件, this._三传插件, out var 三传插件) ||
                 !找出插件(预设.天将插件, this._天将插件, out var 天将插件) ||
                 !找出插件(预设.神煞插件, this._神煞插件, out var 神煞插件) ||
@@ -290,7 +312,7 @@ namespace SixRens.Core.插件管理.插件包管理
             bool 存在未显式指定的课体 = 未显式指定的课体.Count > 0;
             bool 存在指定启用但未找到的课体 = 神煞启用.Count > 0;
 
-            return new(
+            var result = new 经过解析的预设(
                 三传插件,
                 天将插件,
                 显式指定启用的神煞.Select(神煞 => 神煞.Value).Concat(未显式指定的神煞),
@@ -302,6 +324,8 @@ namespace SixRens.Core.插件管理.插件包管理
                 存在指定启用但未找到的课体,
                 存在同时指定了启用和禁用的课体,
                 参考插件);
+            锁.Dispose(); // 我不确定 using 语句是否可能导致锁被提前释放。
+            return result;
         }
 
         public void Dispose()
